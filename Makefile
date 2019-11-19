@@ -14,6 +14,9 @@ linter-fix:
 test:
 	. $(VENV_NAME)/bin/activate; tox
 
+test-current:
+	. $(VENV_NAME)/bin/activate; tox -e python
+
 clean:
 	@rm -rf $(VENV_NAME) build/ dist/
 
