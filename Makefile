@@ -8,6 +8,9 @@ $(VENV_NAME)/bin/activate: setup.py
 linter:
 	. $(VENV_NAME)/bin/activate; flake8 ./apidaze
 
+linter-fix:
+	. $(VENV_NAME)/bin/activate; autopep8 --in-place --aggressive --aggressive -r apidaze/
+
 clean:
 	@rm -rf $(VENV_NAME) build/ dist/
 
