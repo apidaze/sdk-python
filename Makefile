@@ -11,6 +11,9 @@ linter:
 linter-fix:
 	. $(VENV_NAME)/bin/activate; autopep8 --in-place --aggressive --aggressive -r apidaze/
 
+test:
+	. $(VENV_NAME)/bin/activate; tox
+
 clean:
 	@rm -rf $(VENV_NAME) build/ dist/
 
