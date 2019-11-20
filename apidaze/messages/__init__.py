@@ -5,7 +5,7 @@ class Messages(object):
     def __init__(self, http):
         self.http = http
 
-    def sendSms(self, origin, destination, body):
+    def send(self, origin, destination, body):
         payload = {
             'to': destination,
             'from': origin,
