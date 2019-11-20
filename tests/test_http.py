@@ -1,6 +1,5 @@
 import unittest
-from requests import Session
-from requests_mock import Adapter, Mocker
+from requests_mock import Mocker
 from apidaze.http import Http, HttpMethodEnum
 
 
@@ -11,6 +10,27 @@ class TestHttp(unittest.TestCase):
 
         return http
 
+    @Mocker()
+    def prepare_request(self, method, status_code, body, mocker):
+        http = self.httpInstance
+
+        mocker.register_uri(
+            method=method,
+            url=f'{http.base_url}/endpoint',
+            json=body,
+            status_code=status_code
+        )
+
+        response = http.request(
+            method=HttpMethodEnum[method],
+            endpoint='/endpoint',
+            payload={},
+            headers={}
+        )
+
+        self.assertEqual(body, response.json())
+        self.assertEqual(status_code, response.status_code)
+
     def test_enum_get(self):
         self.assertTrue(isinstance(HttpMethodEnum.GET, HttpMethodEnum))
         self.assertEqual(HttpMethodEnum.GET.value, 'get')
@@ -19,27 +39,26 @@ class TestHttp(unittest.TestCase):
         self.assertTrue(isinstance(HttpMethodEnum.POST, HttpMethodEnum))
         self.assertEqual(HttpMethodEnum.POST.value, 'post')
 
-    @Mocker()
-    def test_request_post_success(self, mocker):
-        http = self.httpInstance
-
-        respJson = {
+    def test_request_post_success(self):
+        body = {
             'success': True
         }
+        self.prepare_request('POST', 200, body)
 
-        mocker.register_uri(
-            method='POST',
-            url=f'{http.base_url}/endpoint',
-            json=respJson,
-            status_code=200
-        )
+    def test_request_post_failure(self):
+        body = {
+            'success': False
+        }
+        self.prepare_request('POST', 401, body)
 
-        response = http.request(
-            method=HttpMethodEnum.POST,
-            endpoint='/endpoint',
-            payload={},
-            headers={}
-        )
+    def test_request_get_success(self):
+        body = {
+            'success': True
+        }
+        self.prepare_request('GET', 200, body)
 
-        self.assertEqual(respJson, response.json())
-        self.assertEqual(200, response.status_code)
+    def test_request_get_failure(self):
+        body = {
+            'success': False
+        }
+        self.prepare_request('GET', 401, body)
