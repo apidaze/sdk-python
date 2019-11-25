@@ -21,6 +21,10 @@ apidaze = Client(api_key=API_KEY, api_secret=API_SECRET)
 
 # print(response['status'])
 
-response = apidaze.calls.get_calls()
+response = apidaze.misc.validate()
+
+print(response['body'])
+
+response = apidaze.calls.list()
 
 print(response)

@@ -14,7 +14,7 @@ class TestCalls(unittest.TestCase):
         return Calls(self.httpInstance)
 
     @Mocker()
-    def prepare_get_calls(self, status_code, mocker):
+    def prepare_list(self, status_code, mocker):
         body = {
             'body': {
                 'uuid': '00000000-0000-0000-0000-000000000000',
@@ -36,18 +36,18 @@ class TestCalls(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.calls.get_calls()
+        response = self.calls.list()
 
         self.assertEqual(expected_body, response)
 
-    def test_get_calls_success(self):
-        self.prepare_get_calls(200)
+    def test_list_success(self):
+        self.prepare_list(200)
 
-    def test_get_calls_failure(self):
-        self.prepare_get_calls(401)
+    def test_list_failure(self):
+        self.prepare_list(401)
 
     @Mocker()
-    def prepare_make_call(
+    def prepare_place(
                         self,
                         caller_id,
                         origin,
@@ -72,16 +72,48 @@ class TestCalls(unittest.TestCase):
             'body': body
         }
 
-        response = self.calls.make_call(caller_id,
+        response = self.calls.place(caller_id,
                                         origin,
                                         destination,
                                         CallType.number)
 
         self.assertEqual(expected_body, response)
 
-    def test_make_call_success(self):
-        self.prepare_make_call(123456789, 987654321, 987654321, 200)
+    def test_place_success(self):
+        self.prepare_place(123456789, 987654321, 987654321, 200)
 
-    def test_make_call_failure(self):
-        self.prepare_make_call(123456789, 987654321, 987654321, 401)
+    def test_place_failure(self):
+        self.prepare_place(123456789, 987654321, 987654321, 401)
 
+    @Mocker()
+    def prepare_get(self, uuid, status_code, mocker):
+        body = {
+            'body': {
+                'uuid': uuid,
+                'created': '2019-11-22 11:30:03',
+                'cid_name': 'Outbound Call'
+                },
+            'status_code': 200
+        }
+
+        mocker.register_uri(
+            method='GET',
+            url=f'{self.httpInstance.base_url}/calls/{uuid}',
+            json=body,
+            status_code=status_code
+        )
+
+        expected_body = {
+            'body': body,
+            'status_code': status_code
+        }
+
+        response = self.calls.get(uuid)
+
+        self.assertEqual(expected_body, response)
+
+    def test_get_success(self):
+        self.prepare_get('00000000-0000-0000-0000-000000000000', 200)
+
+    def test_get_failure(self):
+        self.prepare_get('00000000-0000-0000-0000-000000000000', 401)

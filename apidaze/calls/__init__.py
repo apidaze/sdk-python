@@ -10,7 +10,7 @@ class Calls(object):
     def __init__(self, http):
         self.http = http
 
-    def get_calls(self):
+    def list(self):
         response = self.http.request(
             method=HttpMethodEnum.GET,
             endpoint='/calls',
@@ -24,7 +24,7 @@ class Calls(object):
 
         return result
 
-    def make_call(self, caller_id, origin, destination, call_type):
+    def place(self, caller_id, origin, destination, call_type):
         response = self.http.request(
             method=HttpMethodEnum.POST,
             endpoint='/calls',
@@ -41,3 +41,18 @@ class Calls(object):
         }
 
         return result
+
+    def get(self, uuid):
+        response = self.http.request(
+            method=HttpMethodEnum.GET,
+            endpoint='/calls/'+uuid,
+            payload={}
+            )
+
+        result = {
+            'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
+
