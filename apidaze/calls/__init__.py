@@ -56,3 +56,17 @@ class Calls(object):
 
         return result
 
+    def terminate(self, uuid):
+        response = self.http.request(
+            method=HttpMethodEnum.DELETE,
+            endpoint='/calls/'+uuid,
+            payload={}
+            )
+
+        result = {
+            'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
+

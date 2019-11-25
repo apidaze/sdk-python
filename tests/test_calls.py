@@ -93,7 +93,7 @@ class TestCalls(unittest.TestCase):
                 'created': '2019-11-22 11:30:03',
                 'cid_name': 'Outbound Call'
                 },
-            'status_code': 200
+            'status_code': status_code
         }
 
         mocker.register_uri(
@@ -117,3 +117,34 @@ class TestCalls(unittest.TestCase):
 
     def test_get_failure(self):
         self.prepare_get('00000000-0000-0000-0000-000000000000', 401)
+
+    @Mocker()
+    def prepare_terminate(self, uuid, status_code, mocker):
+        body = {
+            'body': {
+                'ok': ''
+                },
+            'status_code': status_code
+        }
+
+        mocker.register_uri(
+            method='DELETE',
+            url=f'{self.httpInstance.base_url}/calls/{uuid}',
+            json=body,
+            status_code=status_code
+        )
+
+        expected_body = {
+            'body': body,
+            'status_code': status_code
+        }
+
+        response = self.calls.terminate(uuid)
+
+        self.assertEqual(expected_body, response)
+
+    def test_terminate_success(self):
+        self.prepare_terminate('00000000-0000-0000-0000-000000000000', 202)
+
+    def test_terminate_failure(self):
+        self.prepare_terminate('00000000-0000-0000-0000-000000000000', 401)

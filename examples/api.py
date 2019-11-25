@@ -1,4 +1,5 @@
 from apidaze import Client
+from apidaze.calls import CallType
 import os
 from dotenv import load_dotenv
 load_dotenv()
@@ -17,14 +18,15 @@ apidaze = Client(api_key=API_KEY, api_secret=API_SECRET)
 
 # print(response)
 
-# response = apidaze.misc.validates()
+# response = apidaze.misc.validate()
 
-# print(response['status'])
+# print(response['body'])
 
-response = apidaze.misc.validate()
+# response = apidaze.calls.place(14125423968, 12331213131, 12312313131, CallType.number)
+# print(response)
 
-print(response['body'])
+#response = apidaze.calls.list()
+#print(response)
 
-response = apidaze.calls.list()
-
+response = apidaze.calls.terminate('b80bd938-031c-4ddf-9db9-cd4f88fc5813')
 print(response)

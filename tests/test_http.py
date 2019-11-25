@@ -60,3 +60,15 @@ class TestHttp(unittest.TestCase):
             'success': False
         }
         self.prepare_request('GET', 401, body)
+
+    def test_request_delete_success(self):
+        body = {
+            'success': True
+        }
+        self.prepare_request('DELETE', 200, body)
+
+    def test_request_delete_failure(self):
+        body = {
+            'success': False
+        }
+        self.prepare_request('DELETE', 401, body)

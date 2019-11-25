@@ -5,6 +5,7 @@ import requests
 class HttpMethodEnum(Enum):
     GET = "get"
     POST = "post"
+    DELETE = "delete"
 
 
 class Http(object):
@@ -35,6 +36,8 @@ class Http(object):
         elif method == HttpMethodEnum.GET:
             response = requests.get(
                 url, params=params, headers=headers, data=payload)
+        elif method == HttpMethodEnum.DELETE:
+            response = requests.delete(url, params=params, headers=headers)
 
         return response
 
