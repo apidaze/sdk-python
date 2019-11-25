@@ -49,13 +49,13 @@ class TestCalls(unittest.TestCase):
     @Mocker()
     def prepare_make_call(
                         self,
-                        callerid,
+                        caller_id,
                         origin,
                         destination,
                         status_code,
                         mocker):
         body = {
-            'callerid': callerid,
+            'callerid': caller_id,
             'origin': origin,
             'destination': destination,
             'status_code': status_code
@@ -72,7 +72,7 @@ class TestCalls(unittest.TestCase):
             'body': body
         }
 
-        response = self.calls.make_call(callerid,
+        response = self.calls.make_call(caller_id,
                                         origin,
                                         destination,
                                         CallType.number)

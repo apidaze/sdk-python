@@ -24,12 +24,12 @@ class Calls(object):
 
         return result
 
-    def make_call(self, callerid, origin, destination, call_type):
+    def make_call(self, caller_id, origin, destination, call_type):
         response = self.http.request(
             method=HttpMethodEnum.POST,
             endpoint='/calls',
             payload={
-                'callerid': callerid,
+                'callerid': caller_id,
                 'origin': origin,
                 'destination': destination,
                 'type': call_type.value
