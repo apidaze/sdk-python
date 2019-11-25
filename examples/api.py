@@ -16,3 +16,7 @@ response = apidaze.messages.send(
 )
 
 print(response)
+
+response = apidaze.misc.validates()
+
+print(response['status'])

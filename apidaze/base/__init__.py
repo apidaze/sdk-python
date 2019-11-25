@@ -1,5 +1,6 @@
 from apidaze.http import Http
 from apidaze.messages import Messages
+from apidaze.misc import Miscellaneous
 
 
 class Client(object):
@@ -28,3 +29,4 @@ class Client(object):
         self.calls = None
         self.cdr_handlers = None
         self.recordings = None
+        self.misc = Miscellaneous(http=self.http)
