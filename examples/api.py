@@ -23,8 +23,4 @@ apidaze = Client(api_key=API_KEY, api_secret=API_SECRET)
 
 response = apidaze.calls.get_calls()
 
-print(response['status'])
-
-response = apidaze.calls.get_calls()
-
 print(response)
