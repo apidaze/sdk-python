@@ -1,11 +1,36 @@
-from apidaze.http import HttpMethodEnum
+from apidaze.http import Http, HttpMethodEnum
 
 
 class Messages(object):
-    def __init__(self, http):
+    """
+        Initializes the Messages class
+
+        Parameters
+        ----------
+        http: Http
+            Apidaze Http object
+
+        Returns
+        -------
+        object
+            The Apidaze Messages object
+    """
+    def __init__(self, http: Http):
         self.http = http
 
-    def send(self, origin, destination, body):
+    def send(self, origin: str, destination: str, body: str):
+        """
+            Sends SMS to destination
+
+            Parameters
+            ----------
+            origin: str
+                The number to send the text from. Must be an active number on your account.
+            destination: str
+                Destination number (no + sign)
+            body: dict
+                The message to send.
+        """
         payload = {
             'to': destination,
             'from': origin,

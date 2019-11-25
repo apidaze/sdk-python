@@ -5,16 +5,22 @@ from apidaze.calls import Calls
 
 
 class Client(object):
-    def __init__(self, api_key=None, api_secret=None):
-        """
-        Initializes an APIdaze Client
+    """
+        Initializes the Apidaze Client class
 
-        :param str api_key: API key to use with
-        :param str api_secret: API secret to authenticate with
+        Parameters
+        ----------
+        api_key: str
+            API key to use with
+        api_secret: str
+            API secret to authenticate with
 
-        :returns: APIdaze Client
-        """
-
+        Returns
+        -------
+        object
+            Apidaze Client object
+    """
+    def __init__(self, api_key: str = None, api_secret: str = None):
         self.api_key = api_key
         self.api_secret = api_secret
 
