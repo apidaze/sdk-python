@@ -75,7 +75,7 @@ class TestCalls(unittest.TestCase):
         response = self.calls.make_call(callerid,
                                         origin,
                                         destination,
-                                        CallType.number.value)
+                                        CallType.number)
 
         self.assertEqual(expected_body, response)
 

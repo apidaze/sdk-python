@@ -32,7 +32,7 @@ class Calls(object):
                 'callerid': callerid,
                 'origin': origin,
                 'destination': destination,
-                'type': call_type
+                'type': call_type.value
             }
             )
 
