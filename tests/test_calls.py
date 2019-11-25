@@ -1,7 +1,7 @@
 import unittest
 from requests_mock import Mocker
 from apidaze.http import Http
-from apidaze.calls import Calls
+from apidaze.calls import Calls, CallType
 
 
 class TestCalls(unittest.TestCase):
@@ -45,3 +45,43 @@ class TestCalls(unittest.TestCase):
 
     def test_get_calls_failure(self):
         self.prepare_get_calls(401)
+
+    @Mocker()
+    def prepare_make_call(
+                        self,
+                        callerid,
+                        origin,
+                        destination,
+                        status_code,
+                        mocker):
+        body = {
+            'callerid': callerid,
+            'origin': origin,
+            'destination': destination,
+            'status_code': status_code
+        }
+
+        mocker.register_uri(
+            method='POST',
+            url=f'{self.httpInstance.base_url}/calls',
+            json=body,
+            status_code=status_code
+        )
+
+        expected_body = {
+            'body': body
+        }
+
+        response = self.calls.make_call(callerid,
+                                        origin,
+                                        destination,
+                                        CallType.number.value)
+
+        self.assertEqual(expected_body, response)
+
+    def test_make_call_success(self):
+        self.prepare_make_call(123456789, 987654321, 987654321, 200)
+
+    def test_make_call_failure(self):
+        self.prepare_make_call(123456789, 987654321, 987654321, 401)
+
