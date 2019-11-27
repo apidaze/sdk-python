@@ -72,10 +72,11 @@ class TestCalls(unittest.TestCase):
             'body': body
         }
 
-        response = self.calls.place(caller_id,
-                                        origin,
-                                        destination,
-                                        CallType.number)
+        response = self.calls.place(
+                                    caller_id,
+                                    origin,
+                                    destination,
+                                    CallType.number)
 
         self.assertEqual(expected_body, response)
 

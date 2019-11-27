@@ -17,6 +17,7 @@ class Messages(object):
     """
     def __init__(self, http: Http):
         self.http = http
+        self.endpoint = '/sms/send'
 
     def send(self, origin: str, destination: str, body: str):
         """
@@ -39,7 +40,7 @@ class Messages(object):
 
         response = self.http.request(
             method=HttpMethodEnum.POST,
-            endpoint='/sms/send',
+            endpoint=self.endpoint,
             payload=payload)
 
         result = {

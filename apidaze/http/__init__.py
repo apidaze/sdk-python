@@ -1,6 +1,6 @@
 from enum import Enum
 import requests
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urlparse
 
 
 class HttpMethodEnum(Enum):
@@ -55,7 +55,7 @@ class Http(object):
         elif method == HttpMethodEnum.DELETE:
             response = requests.delete(url, params=params, headers=headers)
         elif method == HttpMethodEnum.PUT:
-            response = response.put(
+            response = requests.put(
                                 url,
                                 params=params,
                                 headers=headers,
@@ -79,5 +79,8 @@ class Http(object):
         except ValueError:
             return False
 
+    def __slash_join(self, *args: str):
+        return "/".join(arg.strip("/") for arg in args)
+
     def __concatinate_url(self, url: str, endpoint: str) -> str:
-        return urljoin(url, endpoint)
+        return self.__slash_join(url, endpoint)

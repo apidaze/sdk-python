@@ -17,6 +17,7 @@ class Cdrhandlers(object):
     """
     def __init__(self, http: Http):
         self.http = http
+        self.endpoint = '/cdrhttphandlers'
 
     def list(self):
         """
@@ -29,7 +30,7 @@ class Cdrhandlers(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.GET,
-            endpoint='/cdrhttphandlers',
+            endpoint=self.endpoint,
             payload={}
             )
 
@@ -59,7 +60,7 @@ class Cdrhandlers(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.POST,
-            endpoint='/cdrhttphandlers',
+            endpoint=self.endpoint,
             payload={
                 'url': url,
                 'name': name
@@ -73,12 +74,14 @@ class Cdrhandlers(object):
 
         return result
 
-    def update(self, url: str, name: str):
+    def update(self, id: int, url: str, name: str):
         """
             Updates your current CDR HTTP Handler. 
 
             Parameters
             ----------
+            id: int
+                ID of your CDR handler
             url: str
                 URL. of your application
             name: str
@@ -90,8 +93,8 @@ class Cdrhandlers(object):
                 JSON response
         """
         response = self.http.request(
-            method=HttpMethodEnum.POST,
-            endpoint='/cdrhttphandlers',
+            method=HttpMethodEnum.PUT,
+            endpoint=f'{self.endpoint}/{id}',
             payload={
                 'url': url,
                 'name': name
@@ -99,7 +102,7 @@ class Cdrhandlers(object):
             )
 
         result = {
-            'body': response.json(),
+            'body': response.text,
             'status_code': response.status_code
         }
 

@@ -23,6 +23,7 @@ class Calls(object):
     """
     def __init__(self, http):
         self.http = http
+        self.endpoint = '/calls'
 
     def list(self):
         """
@@ -35,7 +36,7 @@ class Calls(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.GET,
-            endpoint='/calls',
+            endpoint=self.endpoint,
             payload={}
             )
 
@@ -46,7 +47,8 @@ class Calls(object):
 
         return result
 
-    def place(self,
+    def place(
+            self,
             caller_id: str,
             origin: str,
             destination: str,
@@ -75,7 +77,7 @@ class Calls(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.POST,
-            endpoint='/calls',
+            endpoint=self.endpoint,
             payload={
                 'callerid': caller_id,
                 'origin': origin,
@@ -106,7 +108,7 @@ class Calls(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.GET,
-            endpoint='/calls/'+uuid,
+            endpoint=f'{self.endpoint}/{uuid}',
             payload={}
             )
 
@@ -133,7 +135,7 @@ class Calls(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.DELETE,
-            endpoint='/calls/'+uuid,
+            endpoint=f'{self.endpoint}/{uuid}',
             payload={}
             )
 

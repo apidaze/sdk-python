@@ -17,6 +17,7 @@ class Miscellaneous(object):
     """
     def __init__(self, http: Http):
         self.http = http
+        self.endpoint = '/validates'
 
     def validate(self):
         """
@@ -29,7 +30,7 @@ class Miscellaneous(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.GET,
-            endpoint='/validates',
+            endpoint=self.endpoint,
             payload={}
         )
 

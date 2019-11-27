@@ -17,6 +17,7 @@ class Recordings(object):
     """
     def __init__(self, http: Http):
         self.http = http
+        self.endpoint = '/recordings'
 
     def list(self):
         """
@@ -29,7 +30,7 @@ class Recordings(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.GET,
-            endpoint='/recordings',
+            endpoint=self.endpoint,
             payload={}
             )
 
@@ -58,7 +59,7 @@ class Recordings(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.GET,
-            endpoint='/recordings/'+filename,
+            endpoint=f'{self.endpoint}/{filename}',
             payload={
                     'name': filename,
                     'description': description
@@ -88,7 +89,7 @@ class Recordings(object):
         """
         response = self.http.request(
             method=HttpMethodEnum.DELETE,
-            endpoint='/recordings/'+filename,
+            endpoint=f'{self.endpoint}/{filename}',
             payload={},
             params={
                 'name': filename
