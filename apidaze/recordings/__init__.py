@@ -39,3 +39,65 @@ class Recordings(object):
         }
 
         return result
+
+    def get(self, filename: str, description: str = ""):
+        """
+            Gets raw WAVE data for a recording by filename
+
+            Parameters
+            ----------
+            filename: str
+                Name of the recordings file.
+            description: str optional
+                Description of your download.
+
+            Returns
+            -------
+            dict
+                response, response['body'] contains the WAVE data
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.GET,
+            endpoint='/recordings/'+filename,
+            payload={
+                    'name': filename,
+                    'description': description
+                    }
+            )
+
+        result = {
+            'body': response.content,
+            'status_code': response.status_code
+        }
+
+        return result
+
+    def remove(self, filename: str):
+        """
+            Removes a recording by filename
+
+            Parameters
+            ----------
+            filename: str
+                Name of the recordings file.
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.DELETE,
+            endpoint='/recordings/'+filename,
+            payload={},
+            params={
+                'name': filename
+            }
+            )
+
+        result = {
+            'body': response.text,
+            'status_code': response.status_code
+        }
+
+        return result

@@ -18,7 +18,13 @@ class Http(object):
 
         self.base_url = 'https://api4.apidaze.io/' + api_key
 
-    def request(self, method, endpoint, payload, headers={}):
+    def request(
+            self,
+            method: HttpMethodEnum,
+            endpoint: str,
+            payload: dict,
+            headers: dict = {},
+            params: dict = {}):
         if not isinstance(method, Enum):
             raise TypeError(
                 'method must be an instance of HttpMethodEnum Enum')
@@ -29,6 +35,9 @@ class Http(object):
         url = self.base_url + endpoint
         headers = self.getHeadersWithDefault(headers=headers)
         response = None
+
+        if params:
+            params.update(params)
 
         if method == HttpMethodEnum.POST:
             response = requests.post(
