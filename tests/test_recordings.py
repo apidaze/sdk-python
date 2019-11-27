@@ -70,14 +70,11 @@ class TestRecordings(unittest.TestCase):
 
     @Mocker()
     def prepare_remove(self, filename, status_code, mocker):
-        url = f'{self.httpInstance.base_url}/recordings/{filename}'
         mocker.register_uri(
             method='DELETE',
-            url=url,
+            url=f'{self.httpInstance.base_url}/recordings/{filename}',
             status_code=status_code
         )
-
-        print(f'\nTesting URL: {url}\n')
 
         response = self.recordings.remove(filename)
 
