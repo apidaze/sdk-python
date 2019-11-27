@@ -102,7 +102,7 @@ class Cdrhandlers(object):
             )
 
         result = {
-            'body': response.text,
+            'body': response.json(),
             'status_code': response.status_code
         }
 
