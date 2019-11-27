@@ -3,6 +3,7 @@ from apidaze.messages import Messages
 from apidaze.misc import Miscellaneous
 from apidaze.calls import Calls
 from apidaze.recordings import Recordings
+from apidaze.cdrhandlers import Cdrhandlers
 
 
 class Client(object):
@@ -35,6 +36,6 @@ class Client(object):
         self.messages = Messages(http=self.http)
         self.external_scripts = None
         self.calls = Calls(http=self.http)
-        self.cdr_handlers = None
+        self.cdr_handlers = Cdrhandlers(http=self.http)
         self.recordings = Recordings(http=self.http)
         self.misc = Miscellaneous(http=self.http)
