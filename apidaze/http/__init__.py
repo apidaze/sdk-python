@@ -1,22 +1,26 @@
 from enum import Enum
 import requests
+from urllib.parse import urlparse, urljoin
 
 
 class HttpMethodEnum(Enum):
     GET = "get"
     POST = "post"
     DELETE = "delete"
+    PUT = "put"
 
 
 class Http(object):
-    def __init__(self, api_key, api_secret):
+    def __init__(self, api_key: str, api_secret: str):
         self.api_key = api_key
         self.api_secret = api_secret
 
         if not self.api_key or not self.api_secret:
             raise ValueError('api_key and api_secret must be provided')
 
-        self.base_url = 'https://api4.apidaze.io/' + api_key
+        self.base_url = self.__concatinate_url(
+                                'https://api4.apidaze.io/',
+                                api_key)
 
     def request(
             self,
@@ -31,8 +35,11 @@ class Http(object):
 
         params = {'api_secret': self.api_secret}
 
-        # TODO: use an URL parser to join
-        url = self.base_url + endpoint
+        url = self.__concatinate_url(self.base_url, endpoint)
+
+        if not self.__is_url_valid(url):
+            raise ValueError('URL is invalid')
+
         headers = self.getHeadersWithDefault(headers=headers)
         response = None
 
@@ -47,6 +54,12 @@ class Http(object):
                 url, params=params, headers=headers, data=payload)
         elif method == HttpMethodEnum.DELETE:
             response = requests.delete(url, params=params, headers=headers)
+        elif method == HttpMethodEnum.PUT:
+            response = response.put(
+                                url,
+                                params=params,
+                                headers=headers,
+                                data=payload)
 
         return response
 
@@ -58,3 +71,13 @@ class Http(object):
         default.update(headers)
 
         return default
+
+    def __is_url_valid(self, url: str) -> bool:
+        try:
+            result = urlparse(url)
+            return all([result.scheme, result.netloc, result.path])
+        except ValueError:
+            return False
+
+    def __concatinate_url(self, url: str, endpoint: str) -> str:
+        return urljoin(url, endpoint)
