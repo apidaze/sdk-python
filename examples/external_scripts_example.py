@@ -14,4 +14,10 @@ def list_external_scripts():
     print(response)
 
 
+def get_external_script(id: int):
+    response = apidaze.external_scripts.get(id)
+    print(response)
+
+
 list_external_scripts()
+get_external_script(1589)

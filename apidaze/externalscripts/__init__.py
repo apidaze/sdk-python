@@ -40,3 +40,30 @@ class Externalscripts(object):
         }
 
         return result
+
+    def get(self, id: int):
+        """
+            Shows specific external script by id
+
+            Parameters
+            ----------
+            id: int
+                id of external script
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.GET,
+            endpoint=f'{self.endpoint}/{id}',
+            payload={}
+            )
+
+        result = {
+            'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
