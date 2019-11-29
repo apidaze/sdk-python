@@ -86,3 +86,40 @@ class TestCdrhandlers(unittest.TestCase):
 
     def test_get_failure(self):
         self.prepare_get(1234, 401)
+
+    @Mocker()
+    def prepare_update(self, id, url, name, status_code, mocker):
+        body = {
+            'body': {
+                'id': id,
+                'name': name,
+                'url': url,
+                'sms_url': '',
+                'reseller_cust_id': 0,
+                'dev_cust_id': 0,
+                'created_at': '2019-09-11T15:50:10.000Z',
+                'updated_at': '2019-11-28T16:42:37.000Z'},
+            'status_code': status_code
+        }
+
+        mocker.register_uri(
+            method='PUT',
+            url=f'{self.httpInstance.base_url}/externalscripts/{id}',
+            json=body,
+            status_code=status_code
+        )
+
+        expected_body = {
+            'body': body,
+            'status_code': status_code
+        }
+
+        response = self.external_scripts.update(id, url, name)
+
+        self.assertEqual(expected_body, response)
+
+    def test_update_success(self):
+        self.prepare_update(101, 'http://exmaple.com/test.xml', 'My Test Script', 202)
+
+    def test_update_failure(self):
+        self.prepare_update(101, 'http://exmaple.com/test.xml', 'My Test Script', 401)

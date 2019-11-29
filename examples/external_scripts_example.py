@@ -19,5 +19,11 @@ def get_external_script(id: int):
     print(response)
 
 
+def update_external_script(id: int, url: str, name: str):
+    response = apidaze.external_scripts.update(id, url, name)
+    print(response)
+
+
 list_external_scripts()
 get_external_script(1589)
+update_external_script(1589, 'http://b.atwa.us/apidaze/b.xml', 'Bartoszs script')

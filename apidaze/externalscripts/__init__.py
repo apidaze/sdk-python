@@ -67,3 +67,37 @@ class Externalscripts(object):
         }
 
         return result
+
+    def update(self, id: int, url: str, name: str):
+        """
+            Updates the external script with given id. 
+
+            Parameters
+            ----------
+            id: int
+                ID of your external script
+            url: str
+                URL of your external script
+            name: str
+                Name of your external script
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.PUT,
+            endpoint=f'{self.endpoint}/{id}',
+            payload={
+                'url': url,
+                'name': name
+            }
+            )
+
+        result = {
+            'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
