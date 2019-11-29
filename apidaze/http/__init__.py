@@ -18,7 +18,7 @@ class Http(object):
         if not self.api_key or not self.api_secret:
             raise ValueError('api_key and api_secret must be provided')
 
-        self.base_url = self.__concatinate_url(
+        self.base_url = self.__concatenate_url(
                                 'https://api4.apidaze.io/',
                                 api_key)
 
@@ -35,7 +35,7 @@ class Http(object):
 
         params = {'api_secret': self.api_secret}
 
-        url = self.__concatinate_url(self.base_url, endpoint)
+        url = self.__concatenate_url(self.base_url, endpoint)
 
         if not self.__is_url_valid(url):
             raise ValueError('URL is invalid')
@@ -82,5 +82,5 @@ class Http(object):
     def __slash_join(self, *args: str):
         return "/".join(arg.strip("/") for arg in args)
 
-    def __concatinate_url(self, url: str, endpoint: str) -> str:
+    def __concatenate_url(self, url: str, endpoint: str) -> str:
         return self.__slash_join(url, endpoint)
