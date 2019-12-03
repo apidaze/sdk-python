@@ -25,7 +25,11 @@ child8 = Intercept('f28a3e29-dac4-462c-bf94-b1d518ddbe2d')
 child9 = Speak(text="Dzień dobry", lang=SpeakLanguages.pl_PL)
 child10 = Bind(action='http://script', text="1")
 child11 = Wait(5)
-child12 = Dial(target_type=DialTargetType.sipaccount, destination='blabla@blabla.com')
+child12 = Dial(
+    target_type=DialTargetType.sipaccount,
+    destination='blabla@blabla.com',
+    strategy=DialStrategy.sequence,
+    timeout=120)
 
 xml_builder.add(child).add(child2).add(child3).add(child4).add(child5).add(
     child6
@@ -33,5 +37,5 @@ xml_builder.add(child).add(child2).add(child3).add(child4).add(child5).add(
         child10
     ).add(child11).add(child12)
 
-s = etree.tostring(xml_builder.root, method='xml')
+s = etree.tostring(xml_builder.root, pretty_print=True)
 print(s)
