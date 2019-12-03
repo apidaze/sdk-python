@@ -39,3 +39,5 @@ xml_builder.add(child).add(child2).add(child3).add(child4).add(child5).add(
 
 s = etree.tostring(xml_builder.root, pretty_print=True)
 print(f'{s}')
+
+xml_builder.write_to_file('text.xml')

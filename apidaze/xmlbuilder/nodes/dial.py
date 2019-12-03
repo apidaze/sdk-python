@@ -13,17 +13,17 @@ class DialTargetType(Enum):
     sipuri = 3
 
 
-class _Number(BaseNode):
+class Number(BaseNode):
     def __init__(self, number: str):
         super().__init__(number)
 
 
-class _Sipaccount(BaseNode):
+class Sipaccount(BaseNode):
     def __init__(self, sipaccount: str):
         super().__init__(sipaccount)
 
 
-class _Sipuri(BaseNode):
+class Sipuri(BaseNode):
     def __init__(self, uri: str):
         super().__init__(uri)
 
@@ -102,9 +102,9 @@ class Dial(BaseNode):
             })
 
         if target_type == DialTargetType.number:
-            child = _Number(destination)
+            child = Number(destination)
         elif target_type == DialTargetType.sipaccount:
-            child = _Sipaccount(destination)
+            child = Sipaccount(destination)
         else:
-            child = _Sipuri(destination)
+            child = Sipuri(destination)
         super().__init__(child, attrib=attrib)

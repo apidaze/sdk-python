@@ -11,3 +11,6 @@ class XMLBuilder():
         self.work.append(element)
         return self
 
+    def write_to_file(self, filename: str):
+        tree = etree.ElementTree(self.root)
+        tree.write(filename, pretty_print=True, encoding="utf-8")
