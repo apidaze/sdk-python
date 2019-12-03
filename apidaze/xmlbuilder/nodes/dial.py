@@ -108,3 +108,15 @@ class Dial(BaseNode):
         else:
             child = Sipuri(destination)
         super().__init__(child, attrib=attrib)
+
+    def add(self,
+            destination: str,
+            target_type: DialTargetType):
+        if target_type == DialTargetType.number:
+            child = Number(destination)
+        elif target_type == DialTargetType.sipaccount:
+            child = Sipaccount(destination)
+        else:
+            child = Sipuri(destination)
+        self.append(child)
+        return self

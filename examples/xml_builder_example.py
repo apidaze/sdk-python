@@ -16,6 +16,11 @@ from lxml import etree
 xml_builder = XMLBuilder()
 child = Record(name='my_recording.wav')
 child2 = Dial(target_type=DialTargetType.number, destination='4912345567889')
+child2.add(destination="blabla", target_type=DialTargetType.sipaccount).add(
+    destination="sipuri", target_type=DialTargetType.sipuri
+).add(
+    destination="23123131", target_type=DialTargetType.number
+)
 child3 = Answer()
 child4 = Playback('my_wav.wav')
 child5 = Ringback('http://ring.back')
