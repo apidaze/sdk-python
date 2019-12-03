@@ -38,4 +38,4 @@ xml_builder.add(child).add(child2).add(child3).add(child4).add(child5).add(
     ).add(child11).add(child12)
 
 s = etree.tostring(xml_builder.root, pretty_print=True)
-print(s)
+print(f'{s}')

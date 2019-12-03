@@ -28,6 +28,21 @@ class SpeakLanguages(Enum):
 
 
 class Speak(BaseNode):
+    """
+    Say the text enclosed in the tag.
+
+    Parameters
+    ----------
+    text: str
+        Text to be spoken.
+    lang: SpeakLanguages
+        The language this text will be spoken
+
+    Returns
+    -------
+    object
+        Speak node object
+    """
     def __init__(
             self,
             text: str,

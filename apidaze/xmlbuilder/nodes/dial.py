@@ -13,22 +13,58 @@ class DialTargetType(Enum):
     sipuri = 3
 
 
-class Number(BaseNode):
+class _Number(BaseNode):
     def __init__(self, number: str):
         super().__init__(number)
 
 
-class Sipaccount(BaseNode):
+class _Sipaccount(BaseNode):
     def __init__(self, sipaccount: str):
         super().__init__(sipaccount)
 
 
-class Sipuri(BaseNode):
+class _Sipuri(BaseNode):
     def __init__(self, uri: str):
         super().__init__(uri)
 
 
 class Dial(BaseNode):
+    """
+    Place a call to a destination. A destination can be an external number,
+    a SIP account or a voicemail box. Multiple destinations can be dialed
+    simultaneously or in sequence.
+
+    Parameters
+    ----------
+    destination: str
+        Call destination. Can be number, sipaccount or sipuri.
+    target_type: DialTargetType
+        Choose from between number, sipaccount or sipuri.
+    timeout: int
+        The maximum time (in seconds) to ring the call destination.
+        Default is 60.
+    max_call_duration: int
+        The maximum time (in seconds) for this call.
+        The corresponding timer starts when the call is answered.
+    strategy: DialStrategy
+        When dialing multiple destinations, ring them in sequence
+        or simultaneously.
+    action: str
+        The URL of the external script to fetch when the callee
+        ends the current call.
+    answer_url: str
+        A URL containing XML instructions to run on the callee side
+        when the callee answers the call, and before establishing
+        the call with the caller.
+    caller_hangup_url: str
+        A URL containing XML instructions to run on the callee
+        side when the caller hangs up.
+
+    Returns
+    -------
+    object
+        Dial node object
+    """
     def __init__(
             self,
             destination: str,
@@ -66,9 +102,9 @@ class Dial(BaseNode):
             })
 
         if target_type == DialTargetType.number:
-            child = Number(destination)
+            child = _Number(destination)
         elif target_type == DialTargetType.sipaccount:
-            child = Sipaccount(destination)
+            child = _Sipaccount(destination)
         else:
-            child = Sipuri(destination)
+            child = _Sipuri(destination)
         super().__init__(child, attrib=attrib)
