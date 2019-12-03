@@ -28,10 +28,32 @@ class DialStrategy(Enum):
     sequence = 'sequence'
 
 
+class DialTargetType(Enum):
+    number = 1
+    sipaccount = 2
+    sipuri = 3
+
+
+class Number(BaseNode):
+    def __init__(self, number: str):
+        super().__init__(number)
+
+
+class Sipaccount(BaseNode):
+    def __init__(self, sipaccount: str):
+        super().__init__(sipaccount)
+
+
+class Sipuri(BaseNode):
+    def __init__(self, uri: str):
+        super().__init__(uri)
+
+
 class Dial(BaseNode):
     def __init__(
             self,
-            number: str,
+            destination: str,
+            target_type: DialTargetType,
             timeout: int = 60,
             max_call_duration: int = None,
             strategy: DialStrategy = DialStrategy.simultaneous,
@@ -64,7 +86,13 @@ class Dial(BaseNode):
                 'caller-hangup-url': caller_hangup_url
             })
 
-        super().__init__(number, attrib=attrib)
+        if target_type == DialTargetType.number:
+            child = Number(destination)
+        elif target_type == DialTargetType.sipaccount:
+            child = Sipaccount(destination)
+        else:
+            child = Sipuri(destination)
+        super().__init__(child, attrib=attrib)
 
 
 class Answer(BaseNode):
@@ -123,14 +151,40 @@ class SpeakLanguages(Enum):
 
 
 class Speak(BaseNode):
-    def __init__(self,
-            lang: SpeakLanguages = SpeakLanguages.default,
-            text: str
+    def __init__(
+            self,
+            text: str,
+            lang: SpeakLanguages = SpeakLanguages.default
             ):
         attrib = {
             'lang': lang.value,
         }
         super().__init__(text, attrib=attrib)
+
+
+class Bind(BaseNode):
+    def __init__(
+            self,
+            text: str,
+            action: str
+            ):
+        attrib = {
+            'action': action,
+        }
+        super().__init__(text, attrib=attrib)
+
+
+class Wait(BaseNode):
+    """
+        Delay in seconds
+    """
+    def __init__(self, delay: int):
+        super().__init__(str(delay))
+
+
+class Conference(BaseNode):
+    def __init__(self, room: str):
+        super().__init__(room)
 
 
 class XMLBuilder():
@@ -145,17 +199,23 @@ class XMLBuilder():
 
 xml_builder = XMLBuilder()
 child = Record(name='my_recording.wav')
-child2 = Dial(number='4912345567889')
+child2 = Dial(target_type=DialTargetType.number, destination='4912345567889')
 child3 = Answer()
 child4 = Playback('my_wav.wav')
 child5 = Ringback('http://ring.back')
 child6 = Echo(500)
 child7 = Hangup()
 child8 = Intercept('f28a3e29-dac4-462c-bf94-b1d518ddbe2d')
-child9 = Speak(lang=SpeakLanguages.pl_PL, text="Dzień dobry")
+child9 = Speak(text="Dzień dobry", lang=SpeakLanguages.pl_PL)
+child10 = Bind(action='http://script', text="1")
+child11 = Wait(5)
+child12 = Dial(target_type=DialTargetType.sipaccount, destination='blabla@blabla.com')
+
 xml_builder.add(child).add(child2).add(child3).add(child4).add(child5).add(
     child6
-    ).add(child7).add(child8).add(child9)
+    ).add(child7).add(child8).add(child9).add(
+        child10
+    ).add(child11).add(child12)
 
 s = etree.tostring(xml_builder.root, method='xml')
 print(s)
