@@ -26,4 +26,4 @@ def update_external_script(id: int, url: str, name: str):
 
 list_external_scripts()
 # get_external_script(1589)
-# update_external_script(1589, 'http://b.atwa.us/apidaze/a.xml', 'Bartoszs script')
+# update_external_script(1589, 'http://example.com/apidaze/a.xml', 'Bartoszs script')
