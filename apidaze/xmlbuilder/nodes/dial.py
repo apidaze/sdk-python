@@ -83,7 +83,7 @@ class Dial(BaseNode):
 
         if max_call_duration:
             attrib.update({
-                'max-call-duration': max_call_duration
+                'max-call-duration': str(max_call_duration)
             })
 
         if action:
