@@ -5,7 +5,6 @@ from apidaze.xmlbuilder.nodes.echo import Echo
 from apidaze.xmlbuilder.nodes.hangup import Hangup
 from apidaze.xmlbuilder.nodes.speak import Speak
 from apidaze.xmlbuilder.nodes.wait import Wait
-from lxml import etree
 
 
 def example_1():
@@ -15,11 +14,7 @@ def example_1():
     echo = Echo(500)
 
     xmlbuilder.add(answer).add(speak).add(echo)
-    result = etree.tostring(
-             xmlbuilder.root,
-             pretty_print=True,
-             encoding='utf-8').decode('utf-8')
-    print(result)
+    xmlbuilder.printXML()
 
 
 def example_2():
@@ -41,11 +36,7 @@ def example_2():
     ).add(
         hangup
     )
-    result = etree.tostring(
-             xmlbuilder.root,
-             pretty_print=True,
-             encoding='utf-8').decode('utf-8')
-    print(result)
+    xmlbuilder.printXML()
 
 
 example_1()

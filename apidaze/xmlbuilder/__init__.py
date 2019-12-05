@@ -14,3 +14,10 @@ class XMLBuilder():
     def write_to_file(self, filename: str):
         tree = etree.ElementTree(self.root)
         tree.write(filename, pretty_print=True, encoding="utf-8")
+
+    def printXML(self, pretty_print: bool = True, encoding: str = 'utf8'):
+        result = etree.tostring(
+            self.root,
+            pretty_print=True,
+            encoding=encoding).decode(encoding)
+        print(result)
