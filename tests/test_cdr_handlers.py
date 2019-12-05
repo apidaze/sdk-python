@@ -133,4 +133,3 @@ class TestCdrhandlers(unittest.TestCase):
             'http://exmaple.com/cdr-handler',
             'CDR Handler',
             401)
-

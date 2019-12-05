@@ -11,7 +11,9 @@ class TestXMLBuilder(unittest.TestCase):
         expected = "<Document><Work/></Document>"
 
         xmlbuilder = XMLBuilder()
-        result = etree.tostring(xmlbuilder.root, encoding='utf-8').decode('utf-8')
+        result = etree.tostring(
+            xmlbuilder.root,
+            encoding='utf-8').decode('utf-8')
         self.assertEqual(expected, result)
 
     def test_xml_builder_example(self):
@@ -32,5 +34,7 @@ class TestXMLBuilder(unittest.TestCase):
 
         xmlbuilder.add(answer).add(speak).add(echo)
 
-        result = etree.tostring(xmlbuilder.root, encoding='utf-8').decode('utf-8')
+        result = etree.tostring(
+            xmlbuilder.root,
+            encoding='utf-8').decode('utf-8')
         self.assertEqual(expected, result)

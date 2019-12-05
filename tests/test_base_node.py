@@ -18,4 +18,3 @@ class TestBaseNode(unittest.TestCase):
 
         value = node.bool_value(mybool=False)
         self.assertEqual('false', value)
-
