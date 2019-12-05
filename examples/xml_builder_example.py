@@ -10,6 +10,7 @@ from apidaze.xmlbuilder.nodes.intercept import Intercept
 from apidaze.xmlbuilder.nodes.speak import Speak, SpeakLanguages
 from apidaze.xmlbuilder.nodes.bind import Bind
 from apidaze.xmlbuilder.nodes.wait import Wait
+from apidaze.xmlbuilder.nodes.conference import Conference
 from lxml import etree
 
 
@@ -35,12 +36,13 @@ child12 = Dial(
     destination='blabla@blabla.com',
     strategy=DialStrategy.sequence,
     timeout=120)
+child13 = Conference(room='my_room')
 
 xml_builder.add(child).add(child2).add(child3).add(child4).add(child5).add(
     child6
     ).add(child7).add(child8).add(child9).add(
         child10
-    ).add(child11).add(child12)
+    ).add(child11).add(child12).add(child13)
 
 s = etree.tostring(xml_builder.root, pretty_print=True)
 print(f'{s}')
