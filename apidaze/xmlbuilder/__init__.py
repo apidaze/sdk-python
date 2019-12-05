@@ -18,6 +18,6 @@ class XMLBuilder():
     def printXML(self, pretty_print: bool = True, encoding: str = 'utf8'):
         result = etree.tostring(
             self.root,
-            pretty_print=True,
+            pretty_print=pretty_print,
             encoding=encoding).decode(encoding)
         print(result)
