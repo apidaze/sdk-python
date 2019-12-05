@@ -44,7 +44,10 @@ xml_builder.add(child).add(child2).add(child3).add(child4).add(child5).add(
         child10
     ).add(child11).add(child12).add(child13)
 
-s = etree.tostring(xml_builder.root, pretty_print=True)
+s = etree.tostring(
+    xml_builder.root,
+    pretty_print=True,
+    encoding='utf-8').decode('utf-8')
 print(f'{s}')
 
-xml_builder.write_to_file('text.xml')
+# xml_builder.write_to_file('text.xml')
