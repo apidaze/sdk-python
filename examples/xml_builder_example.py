@@ -3,7 +3,7 @@ from apidaze.xmlbuilder.nodes.record import Record
 from apidaze.xmlbuilder.nodes.answer import Answer
 from apidaze.xmlbuilder.nodes.echo import Echo
 from apidaze.xmlbuilder.nodes.hangup import Hangup
-from apidaze.xmlbuilder.nodes.speak import Speak, SpeakLanguages
+from apidaze.xmlbuilder.nodes.speak import Speak
 from apidaze.xmlbuilder.nodes.wait import Wait
 from lxml import etree
 
