@@ -1,4 +1,4 @@
-from apidaze.http import Http, HttpMethodEnum
+from apidaze.http import HttpMethodEnum
 
 
 class Applications(object):
@@ -41,8 +41,93 @@ class Applications(object):
 
         return result
 
-    # def get(id: int):
+    def get_by_app_id(self, app_id: int):
+        """
+            Shows application with id
 
-    # def get(api_key: str):
+            Parameters
+            ----------
+            app_id: int
+                Id of the sub-application
 
-    # def get(name: str):
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.GET,
+            endpoint=self.endpoint,
+            payload={},
+            params={
+                'app_id': app_id
+            }
+            )
+
+        result = {
+            'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
+
+    def get_by_api_key(self, api_key: str):
+        """
+            Shows application with api_key
+
+            Parameters
+            ----------
+            api_key: str
+                Api key of the sub-application
+
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.GET,
+            endpoint=self.endpoint,
+            payload={},
+            params={
+                'api_key': api_key
+            }
+            )
+
+        result = {
+            'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
+
+    def get_by_name(self, name: str):
+        """
+            Shows application with name
+
+            Parameters
+            ----------
+            name: str
+                Name of the sub-application
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.GET,
+            endpoint=self.endpoint,
+            payload={},
+            params={
+                'app_name': name
+            }
+            )
+
+        result = {
+            'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
