@@ -5,6 +5,7 @@ from apidaze.calls import Calls
 from apidaze.recordings import Recordings
 from apidaze.cdrhandlers import Cdrhandlers
 from apidaze.externalscripts import Externalscripts
+from apidaze.applications import Applications
 
 
 class Client(object):
@@ -34,6 +35,7 @@ class Client(object):
         self.http = Http(api_key=self.api_key, api_secret=self.api_secret)
 
         # Domains
+        self.applications = Applications(http=self.http)
         self.messages = Messages(http=self.http)
         self.external_scripts = Externalscripts(http=self.http)
         self.calls = Calls(http=self.http)

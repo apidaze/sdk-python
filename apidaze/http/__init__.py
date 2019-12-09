@@ -18,8 +18,11 @@ class Http(object):
         if not self.api_key or not self.api_secret:
             raise ValueError('api_key and api_secret must be provided')
 
+        # environment = 'https://api4.apidaze.io/'
+        environment = 'https://cpaas-api.dev.voipinnovations.com'
+
         self.base_url = self.__concatenate_url(
-                                'https://api4.apidaze.io/',
+                                environment,
                                 api_key)
 
     def request(
