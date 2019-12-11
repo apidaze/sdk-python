@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.bind import Bind
+from apidaze.script.nodes.bind import Bind
 from lxml import etree
 
 

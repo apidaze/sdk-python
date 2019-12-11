@@ -119,7 +119,15 @@ class TestCdrhandlers(unittest.TestCase):
         self.assertEqual(expected_body, response)
 
     def test_update_success(self):
-        self.prepare_update(101, 'http://exmaple.com/test.xml', 'My Test Script', 202)
+        self.prepare_update(
+            101,
+            'http://exmaple.com/test.xml',
+            'My Test Script',
+            202)
 
     def test_update_failure(self):
-        self.prepare_update(101, 'http://exmaple.com/test.xml', 'My Test Script', 401)
+        self.prepare_update(
+            101,
+            'http://exmaple.com/test.xml',
+            'My Test Script',
+            401)

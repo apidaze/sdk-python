@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.dial import DialTargetType, DialStrategy, Dial
+from apidaze.script.nodes.dial import DialTargetType, DialStrategy, Dial
 from lxml import etree
 
 

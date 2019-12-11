@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.answer import Answer
+from apidaze.script.nodes.answer import Answer
 from lxml import etree
 
 

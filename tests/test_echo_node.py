@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.echo import Echo
+from apidaze.script.nodes.echo import Echo
 from lxml import etree
 
 

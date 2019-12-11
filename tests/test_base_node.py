@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.base_node import BaseNode
+from apidaze.script.nodes.base_node import BaseNode
 from lxml import etree
 
 

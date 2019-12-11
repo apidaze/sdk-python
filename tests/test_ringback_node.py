@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.ringback import Ringback
+from apidaze.script.nodes.ringback import Ringback
 from lxml import etree
 
 

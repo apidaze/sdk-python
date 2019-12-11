@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.hangup import Hangup
+from apidaze.script.nodes.hangup import Hangup
 from lxml import etree
 
 

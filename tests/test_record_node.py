@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.record import Record
+from apidaze.script.nodes.record import Record
 from lxml import etree
 
 

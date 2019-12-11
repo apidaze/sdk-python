@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.speak import Speak, SpeakLanguages
+from apidaze.script.nodes.speak import Speak, SpeakLanguages
 from lxml import etree
 
 

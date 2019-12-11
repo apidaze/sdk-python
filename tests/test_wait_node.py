@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.wait import Wait
+from apidaze.script.nodes.wait import Wait
 from lxml import etree
 
 

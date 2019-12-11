@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.conference import Conference
+from apidaze.script.nodes.conference import Conference
 from lxml import etree
 
 

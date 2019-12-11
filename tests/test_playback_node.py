@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.playback import Playback
+from apidaze.script.nodes.playback import Playback
 from lxml import etree
 
 

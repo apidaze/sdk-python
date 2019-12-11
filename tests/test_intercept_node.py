@@ -1,5 +1,5 @@
 import unittest
-from apidaze.xmlbuilder.nodes.intercept import Intercept
+from apidaze.script.nodes.intercept import Intercept
 from lxml import etree
 
 

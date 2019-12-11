@@ -1,8 +1,8 @@
 import unittest
-from apidaze.xmlbuilder import XMLBuilder
-from apidaze.xmlbuilder.nodes.answer import Answer
-from apidaze.xmlbuilder.nodes.speak import Speak
-from apidaze.xmlbuilder.nodes.echo import Echo
+from apidaze.script import Builder
+from apidaze.script.nodes.answer import Answer
+from apidaze.script.nodes.speak import Speak
+from apidaze.script.nodes.echo import Echo
 from lxml import etree
 
 
@@ -10,7 +10,7 @@ class TestXMLBuilder(unittest.TestCase):
     def test_xml_builder(self):
         expected = "<Document><Work/></Document>"
 
-        xmlbuilder = XMLBuilder()
+        xmlbuilder = Builder()
         result = etree.tostring(
             xmlbuilder.root,
             encoding='utf-8').decode('utf-8')
@@ -27,7 +27,7 @@ class TestXMLBuilder(unittest.TestCase):
 </Document>
 """.replace('\n', '')
 
-        xmlbuilder = XMLBuilder()
+        xmlbuilder = Builder()
         answer = Answer()
         speak = Speak(text='Hello')
         echo = Echo(500)
