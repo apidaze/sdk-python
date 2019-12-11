@@ -11,18 +11,15 @@ class HttpMethodEnum(Enum):
 
 
 class Http(object):
-    def __init__(self, api_key: str, api_secret: str):
+    def __init__(self, api_key: str, api_secret: str, api_url: str):
         self.api_key = api_key
         self.api_secret = api_secret
 
         if not self.api_key or not self.api_secret:
             raise ValueError('api_key and api_secret must be provided')
 
-        # environment = 'https://api4.apidaze.io/'
-        environment = 'https://cpaas-api.dev.voipinnovations.com'
-
         self.base_url = self.__concatenate_url(
-                                environment,
+                                api_url,
                                 api_key)
 
     def request(

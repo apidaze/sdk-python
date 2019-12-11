@@ -24,7 +24,12 @@ class Client(object):
         object
             Apidaze Client object
     """
-    def __init__(self, api_key: str = None, api_secret: str = None):
+    def __init__(
+            self,
+            api_key: str = None,
+            api_secret: str = None,
+            api_url: str = 'https://api4.apidaze.io/'
+            ):
         self.api_key = api_key
         self.api_secret = api_secret
 
@@ -32,7 +37,10 @@ class Client(object):
             raise ValueError('api_key and api_secret must be provided')
 
         # Http request
-        self.http = Http(api_key=self.api_key, api_secret=self.api_secret)
+        self.http = Http(
+            api_key=self.api_key,
+            api_secret=self.api_secret,
+            api_url=api_url)
 
         # Domains
         self.applications = Applications(http=self.http)
