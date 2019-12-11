@@ -80,10 +80,15 @@ class TestCdrhandlers(unittest.TestCase):
         self.assertEqual(expected_body, response)
 
     def test_create_success(self):
-        self.prepare_create('http://exmaple.com/cdr-handler', 'CDR Handler', 200)
+        self.prepare_create(
+                    'http://exmaple.com/cdr-handler',
+                    'CDR Handler', 200)
 
     def test_create_failure(self):
-        self.prepare_create('http://exmaple.com/cdr-handler', 'CDR Handler', 401)
+        self.prepare_create(
+            'http://exmaple.com/cdr-handler',
+            'CDR Handler',
+            401)
 
     @Mocker()
     def prepare_update(self, id, url, name, status_code, mocker):
@@ -116,7 +121,15 @@ class TestCdrhandlers(unittest.TestCase):
         self.assertEqual(expected_body, response)
 
     def test_update_success(self):
-        self.prepare_update(101, 'http://exmaple.com/cdr-handler', 'CDR Handler', 202)
+        self.prepare_update(
+            101,
+            'http://exmaple.com/cdr-handler',
+            'CDR Handler',
+            202)
 
     def test_update_failure(self):
-        self.prepare_update(101, 'http://exmaple.com/cdr-handler', 'CDR Handler', 401)
+        self.prepare_update(
+            101,
+            'http://exmaple.com/cdr-handler',
+            'CDR Handler',
+            401)
