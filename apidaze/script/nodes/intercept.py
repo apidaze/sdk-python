@@ -1,4 +1,4 @@
-from apidaze.xmlbuilder.nodes.base_node import BaseNode
+from apidaze.script.nodes.base_node import BaseNode
 
 
 class Intercept(BaseNode):

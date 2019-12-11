@@ -1,14 +1,14 @@
-from apidaze.xmlbuilder import XMLBuilder
-from apidaze.xmlbuilder.nodes.record import Record
-from apidaze.xmlbuilder.nodes.answer import Answer
-from apidaze.xmlbuilder.nodes.echo import Echo
-from apidaze.xmlbuilder.nodes.hangup import Hangup
-from apidaze.xmlbuilder.nodes.speak import Speak
-from apidaze.xmlbuilder.nodes.wait import Wait
+from apidaze.script import Builder
+from apidaze.script.nodes.record import Record
+from apidaze.script.nodes.answer import Answer
+from apidaze.script.nodes.echo import Echo
+from apidaze.script.nodes.hangup import Hangup
+from apidaze.script.nodes.speak import Speak
+from apidaze.script.nodes.wait import Wait
 
 
 def example_1():
-    xmlbuilder = XMLBuilder()
+    xmlbuilder = Builder()
     answer = Answer()
     speak = Speak(text='Thank you for trying our demo. Have an wonderful day!')
     echo = Echo(500)
@@ -18,7 +18,7 @@ def example_1():
 
 
 def example_2():
-    xmlbuilder = XMLBuilder()
+    xmlbuilder = Builder()
     answer = Answer()
     speak = Speak(text='Thank you for trying our demo. Have an excellent day!')
     record = Record(name='my_recording.wav')
