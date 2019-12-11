@@ -11,7 +11,7 @@ class HttpMethodEnum(Enum):
 
 
 class Http(object):
-    def __init__(self, api_key: str, api_secret: str):
+    def __init__(self, api_key: str, api_secret: str, api_url: str):
         self.api_key = api_key
         self.api_secret = api_secret
 
@@ -19,7 +19,7 @@ class Http(object):
             raise ValueError('api_key and api_secret must be provided')
 
         self.base_url = self.__concatenate_url(
-                                'https://api4.apidaze.io/',
+                                api_url,
                                 api_key)
 
     def request(
@@ -33,7 +33,7 @@ class Http(object):
             raise TypeError(
                 'method must be an instance of HttpMethodEnum Enum')
 
-        params = {'api_secret': self.api_secret}
+        local_params = {'api_secret': self.api_secret}
 
         url = self.__concatenate_url(self.base_url, endpoint)
 
@@ -44,20 +44,23 @@ class Http(object):
         response = None
 
         if params:
-            params.update(params)
+            local_params.update(params)
 
         if method == HttpMethodEnum.POST:
             response = requests.post(
-                url, params=params, headers=headers, data=payload)
+                url, params=local_params, headers=headers, data=payload)
         elif method == HttpMethodEnum.GET:
             response = requests.get(
-                url, params=params, headers=headers, data=payload)
+                url, params=local_params, headers=headers, data=payload)
         elif method == HttpMethodEnum.DELETE:
-            response = requests.delete(url, params=params, headers=headers)
+            response = requests.delete(
+                url,
+                params=local_params,
+                headers=headers)
         elif method == HttpMethodEnum.PUT:
             response = requests.put(
                                 url,
-                                params=params,
+                                params=local_params,
                                 headers=headers,
                                 data=payload)
 

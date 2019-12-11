@@ -5,6 +5,7 @@ from apidaze.calls import Calls
 from apidaze.recordings import Recordings
 from apidaze.cdrhandlers import Cdrhandlers
 from apidaze.externalscripts import Externalscripts
+from apidaze.applications import Applications
 
 
 class Client(object):
@@ -23,7 +24,12 @@ class Client(object):
         object
             Apidaze Client object
     """
-    def __init__(self, api_key: str = None, api_secret: str = None):
+    def __init__(
+            self,
+            api_key: str = None,
+            api_secret: str = None,
+            api_url: str = 'https://api4.apidaze.io/'
+            ):
         self.api_key = api_key
         self.api_secret = api_secret
 
@@ -31,12 +37,76 @@ class Client(object):
             raise ValueError('api_key and api_secret must be provided')
 
         # Http request
-        self.http = Http(api_key=self.api_key, api_secret=self.api_secret)
+        self.http = Http(
+            api_key=self.api_key,
+            api_secret=self.api_secret,
+            api_url=api_url)
 
         # Domains
+        self.applications = Applications(http=self.http)
         self.messages = Messages(http=self.http)
         self.external_scripts = Externalscripts(http=self.http)
         self.calls = Calls(http=self.http)
         self.cdr_handlers = Cdrhandlers(http=self.http)
         self.recordings = Recordings(http=self.http)
         self.misc = Miscellaneous(http=self.http)
+
+    def get_client_by_app_id(self, app_id: int):
+        """
+            Returns the Apidaze Client class based on the application id
+
+            Parameters
+            ----------
+            app_id: int
+                Id of the sub-application
+
+            Returns
+            -------
+            object
+                Apidaze Client object
+        """
+        app_data = self.applications.get_by_app_id(app_id=app_id)
+        return self.__client_for_app_data(app_data=app_data['body'][0])
+
+    def get_client_by_api_key(self, api_key: str):
+        """
+            Returns the Apidaze Client class based on the api key
+
+            Parameters
+            ----------
+            api_key: str
+                Api key of the sub-application
+
+            Returns
+            -------
+            object
+                Apidaze Client object
+        """
+        app_data = self.applications.get_by_api_key(api_key=api_key)
+        return self.__client_for_app_data(app_data=app_data['body'][0])
+
+    def get_client_by_name(self, name: str):
+        """
+            Returns the Apidaze Client class based on the application name
+
+            Parameters
+            ----------
+            name: str
+                Name of the sub-application
+
+            Returns
+            -------
+            object
+                Apidaze Client object
+        """
+        app_data = self.applications.get_by_name(name=name)
+        return self.__client_for_app_data(app_data=app_data['body'][0])
+
+    def __client_for_app_data(self, app_data: dict):
+        api_key = app_data['api_key']
+        api_secret = app_data['api_secret']
+        if not api_key or not api_secret:
+            raise NameError(
+                'Api Key or Api Secret are not present in the app data')
+
+        return Client(api_key=api_key, api_secret=api_secret)

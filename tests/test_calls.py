@@ -21,7 +21,7 @@ class TestCalls(unittest.TestCase):
                 'created': '2019-11-22 11:30:03',
                 'cid_name': 'Outbound Call'
                 },
-            'status_code': 200
+            'status_code': status_code
         }
 
         mocker.register_uri(
