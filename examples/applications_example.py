@@ -29,7 +29,23 @@ def get_app_by_name(name):
     print(response)
 
 
+def client_by_id(app_id):
+    return apidaze.get_client_by_app_id(app_id=app_id)
+
+
+def client_by_key(api_key):
+    return apidaze.get_client_by_api_key(api_key=api_key)
+
+
+def client_by_name(name):
+    return apidaze.get_client_by_name(name=name)
+
+
 # list_subapplications()
-get_app_by_id(3037)
-get_app_by_key('ukkbeozt')
-get_app_by_name('APPLICATION 33')
+# get_app_by_id(3037)
+# get_app_by_key('ukkbeozt')
+# get_app_by_name('APPLICATION 33')
+
+print(client_by_id(3037))
+print(client_by_key('ukkbeozt'))
+print(client_by_name('APPLICATION 33'))
