@@ -28,18 +28,7 @@ class Applications(object):
             dict
                 JSON response
         """
-        response = self.http.request(
-            method=HttpMethodEnum.GET,
-            endpoint=self.endpoint,
-            payload={}
-            )
-
-        result = {
-            'body': response.json(),
-            'status_code': response.status_code
-        }
-
-        return result
+        return self.__prepare_request()
 
     def get_by_app_id(self, app_id: int):
         """
@@ -55,21 +44,11 @@ class Applications(object):
             dict
                 JSON response
         """
-        response = self.http.request(
-            method=HttpMethodEnum.GET,
-            endpoint=self.endpoint,
-            payload={},
-            params={
-                'app_id': app_id
-            }
-            )
-
-        result = {
-            'body': response.json(),
-            'status_code': response.status_code
+        params = {
+            'app_id': app_id
         }
 
-        return result
+        return self.__prepare_request(params=params)
 
     def get_by_api_key(self, api_key: str):
         """
@@ -86,21 +65,11 @@ class Applications(object):
             dict
                 JSON response
         """
-        response = self.http.request(
-            method=HttpMethodEnum.GET,
-            endpoint=self.endpoint,
-            payload={},
-            params={
-                'api_key': api_key
-            }
-            )
-
-        result = {
-            'body': response.json(),
-            'status_code': response.status_code
+        params = {
+            'api_key': api_key
         }
 
-        return result
+        return self.__prepare_request(params=params)
 
     def get_by_name(self, name: str):
         """
@@ -116,13 +85,18 @@ class Applications(object):
             dict
                 JSON response
         """
+        params = {
+            'app_name': name
+        }
+
+        return self.__prepare_request(params=params)
+
+    def __prepare_request(self, params: dict = {}):
         response = self.http.request(
             method=HttpMethodEnum.GET,
             endpoint=self.endpoint,
             payload={},
-            params={
-                'app_name': name
-            }
+            params=params
             )
 
         result = {
