@@ -1,8 +1,5 @@
 import unittest
-from apidaze.script import Builder
-from apidaze.script.nodes.answer import Answer
-from apidaze.script.nodes.speak import Speak
-from apidaze.script.nodes.echo import Echo
+from apidaze.script import Builder, Answer, Speak, Echo
 from lxml import etree
 
 
