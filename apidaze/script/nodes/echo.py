@@ -15,5 +15,8 @@ class Echo(BaseNode):
     object
         Echo node object
     """
-    def __init__(self, delay: int):
-        super().__init__(str(delay))
+    def __init__(self, delay: int = None):
+        if delay:
+            super().__init__(str(delay))
+        else:
+            super().__init__()
