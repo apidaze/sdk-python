@@ -3,12 +3,12 @@ from apidaze.script.nodes.dial import DialTargetType, DialStrategy, Dial
 from lxml import etree
 
 
-class TestDial(unittest.TestCase):
+class Testdial(unittest.TestCase):
     def test_dial_number(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous">
-<Number>1234567890</Number>
-</Dial>
+<dial timeout="60" strategy="simultaneous">
+<number>1234567890</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -23,9 +23,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_sipaccount(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous">
-<Sipaccount>sip@account</Sipaccount>
-</Dial>
+<dial timeout="60" strategy="simultaneous">
+<sipaccount>sip@account</sipaccount>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -40,9 +40,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_sipuri(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous">
-<Sipuri>sip://uri</Sipuri>
-</Dial>
+<dial timeout="60" strategy="simultaneous">
+<sipuri>sip://uri</sipuri>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -57,11 +57,11 @@ class TestDial(unittest.TestCase):
 
     def test_dial_multiple_numbers(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous">
-<Number>1234567890</Number>
-<Number>0000000000</Number>
-<Number>1111111111</Number>
-</Dial>
+<dial timeout="60" strategy="simultaneous">
+<number>1234567890</number>
+<number>0000000000</number>
+<number>1111111111</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -78,9 +78,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_strategy_sequence(self):
         expected = """
-<Dial timeout="60" strategy="sequence">
-<Number>1234567890</Number>
-</Dial>
+<dial timeout="60" strategy="sequence">
+<number>1234567890</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -96,9 +96,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_timeout(self):
         expected = """
-<Dial timeout="120" strategy="simultaneous">
-<Number>1234567890</Number>
-</Dial>
+<dial timeout="120" strategy="simultaneous">
+<number>1234567890</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -114,9 +114,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_max_call_duration(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous" max-call-duration="120">
-<Number>1234567890</Number>
-</Dial>
+<dial timeout="60" strategy="simultaneous" max-call-duration="120">
+<number>1234567890</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -132,9 +132,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_action(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous" action="http://action">
-<Number>1234567890</Number>
-</Dial>
+<dial timeout="60" strategy="simultaneous" action="http://action">
+<number>1234567890</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -150,9 +150,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_answer_url(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous" answer-url="http://url">
-<Number>1234567890</Number>
-</Dial>
+<dial timeout="60" strategy="simultaneous" answer-url="http://url">
+<number>1234567890</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -168,9 +168,9 @@ class TestDial(unittest.TestCase):
 
     def test_dial_(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous" caller-hangup-url="http://url">
-<Number>1234567890</Number>
-</Dial>
+<dial timeout="60" strategy="simultaneous" caller-hangup-url="http://url">
+<number>1234567890</number>
+</dial>
 """.replace('\n', '')
 
         node = Dial(
@@ -186,11 +186,11 @@ class TestDial(unittest.TestCase):
 
     def test_dial_different_targets(self):
         expected = """
-<Dial timeout="60" strategy="simultaneous">
-<Number>1234567890</Number>
-<Sipaccount>sip@account</Sipaccount>
-<Sipuri>sip://uri</Sipuri>
-</Dial>
+<dial timeout="60" strategy="simultaneous">
+<number>1234567890</number>
+<sipaccount>sip@account</sipaccount>
+<sipuri>sip://uri</sipuri>
+</dial>
 """.replace('\n', '')
 
         node = Dial(

@@ -5,7 +5,7 @@ from lxml import etree
 
 class TestBaseNode(unittest.TestCase):
     def test_base_node(self):
-        expected = "<BaseNode/>"
+        expected = "<basenode/>"
 
         node = BaseNode()
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')
