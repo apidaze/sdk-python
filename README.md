@@ -99,13 +99,13 @@ The code above will produce the following XML
 
 ```xml
 <?xml version='1.0' encoding='utf8'?>
-<Document>
-  <Work>
-    <Answer/>
-    <Speak lang="en-US">Thank you for trying our demo. Have an wonderful day!</Speak>
-    <Echo>500</Echo>
-  </Work>
-</Document>
+<document>
+  <work>
+    <answer/>
+    <speak lang="en-US">Thank you for trying our demo. Have an wonderful day!</speak>
+    <echo>500</echo>
+  </work>
+</document>
 ```
 
 ## More examples
