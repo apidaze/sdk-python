@@ -16,8 +16,8 @@ from apidaze.script.nodes.wait import Wait # NOQA
 
 class Builder():
     def __init__(self):
-        self.root = etree.Element('Document')
-        self.work = etree.SubElement(self.root, 'Work')
+        self.root = etree.Element('document')
+        self.work = etree.SubElement(self.root, 'work')
 
     def add(self, element: BaseNode):
         self.work.append(element)

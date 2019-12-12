@@ -1,6 +1,9 @@
-from lxml import objectify
+from lxml import etree
 
 
-class BaseNode(objectify.ObjectifiedElement):
+class BaseNode(etree.ElementBase):
+    def _init(self):
+        self.tag = self.__class__.__name__.lower()
+
     def bool_value(self, mybool: bool) -> str:
         return 'true' if mybool else 'false'

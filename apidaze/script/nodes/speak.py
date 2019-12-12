@@ -1,4 +1,5 @@
 from apidaze.script.nodes.base_node import BaseNode
+from apidaze.script.nodes.bind import Bind
 from enum import Enum
 
 
@@ -52,3 +53,7 @@ class Speak(BaseNode):
             'lang': lang.value,
         }
         super().__init__(text, attrib=attrib)
+
+    def add(self, bind: Bind):
+        self.append(bind)
+        return self
