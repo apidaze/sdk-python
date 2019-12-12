@@ -3,9 +3,9 @@ from apidaze.script.nodes.speak import Speak, SpeakLanguages
 from lxml import etree
 
 
-class TestSpeak(unittest.TestCase):
+class Testspeak(unittest.TestCase):
     def test_speak_default(self):
-        expected = '<Speak lang="en-US">Hello</Speak>'
+        expected = '<speak lang="en-US">Hello</speak>'
 
         node = Speak(text='Hello')
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')
@@ -13,7 +13,7 @@ class TestSpeak(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def test_speak_pl_PL(self):
-        expected = '<Speak lang="pl-PL">Cześć</Speak>'
+        expected = '<speak lang="pl-PL">Cześć</speak>'
 
         node = Speak(text='Cześć', lang=SpeakLanguages.pl_PL)
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')
@@ -21,7 +21,7 @@ class TestSpeak(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def test_speak_de_DE(self):
-        expected = '<Speak lang="de-DE">Hallo</Speak>'
+        expected = '<speak lang="de-DE">Hallo</speak>'
 
         node = Speak(text='Hallo', lang=SpeakLanguages.de_DE)
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')
@@ -29,7 +29,7 @@ class TestSpeak(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def test_speak_en_US(self):
-        expected = '<Speak lang="en-US">Hello</Speak>'
+        expected = '<speak lang="en-US">Hello</speak>'
 
         node = Speak(text='Hello', lang=SpeakLanguages.en_US)
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')
@@ -37,7 +37,7 @@ class TestSpeak(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def test_speak_en_GB(self):
-        expected = '<Speak lang="en-GB">Hello</Speak>'
+        expected = '<speak lang="en-GB">Hello</speak>'
 
         node = Speak(text='Hello', lang=SpeakLanguages.en_GB)
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')
@@ -45,7 +45,7 @@ class TestSpeak(unittest.TestCase):
         self.assertEqual(expected, result)
 
     def test_speak_en_AU(self):
-        expected = '<Speak lang="en-AU">Hello</Speak>'
+        expected = '<speak lang="en-AU">Hello</speak>'
 
         node = Speak(text='Hello', lang=SpeakLanguages.en_AU)
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')

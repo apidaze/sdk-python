@@ -5,7 +5,7 @@ from lxml import etree
 
 class TestIntercept(unittest.TestCase):
     def test_intercept(self):
-        expected = "<Intercept>uuid</Intercept>"
+        expected = "<intercept>uuid</intercept>"
 
         node = Intercept(uuid='uuid')
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')

@@ -5,7 +5,7 @@ from lxml import etree
 
 class TestXMLBuilder(unittest.TestCase):
     def test_xml_builder(self):
-        expected = "<Document><Work/></Document>"
+        expected = "<document><work/></document>"
 
         xmlbuilder = Builder()
         result = etree.tostring(
@@ -15,13 +15,13 @@ class TestXMLBuilder(unittest.TestCase):
 
     def test_xml_builder_example(self):
         expected = """
-<Document>
-<Work>
-<Answer/>
-<Speak lang="en-US">Hello</Speak>
-<Echo>500</Echo>
-</Work>
-</Document>
+<document>
+<work>
+<answer/>
+<speak lang="en-US">Hello</speak>
+<echo>500</echo>
+</work>
+</document>
 """.replace('\n', '')
 
         xmlbuilder = Builder()

@@ -5,7 +5,7 @@ from lxml import etree
 
 class TestPlayback(unittest.TestCase):
     def test_playback(self):
-        expected = "<Playback>my_file.wav</Playback>"
+        expected = "<playback>my_file.wav</playback>"
 
         node = Playback(file='my_file.wav')
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')

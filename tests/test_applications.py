@@ -7,7 +7,7 @@ from apidaze.applications import Applications
 class TestApplications(unittest.TestCase):
     @property
     def httpInstance(self):
-        return Http(api_key='API_KEY', api_secret='API_SECRET')
+        return Http(api_key='API_KEY', api_secret='API_SECRET', api_url='http://api.url')
 
     @property
     def applications(self):

@@ -5,7 +5,7 @@ from lxml import etree
 
 class TestHangup(unittest.TestCase):
     def test_hangup(self):
-        expected = "<Hangup/>"
+        expected = "<hangup/>"
 
         node = Hangup()
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')

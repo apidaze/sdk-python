@@ -5,7 +5,7 @@ from lxml import etree
 
 class TestWait(unittest.TestCase):
     def test_wait(self):
-        expected = "<Wait>5</Wait>"
+        expected = "<wait>5</wait>"
 
         node = Wait(5)
         result = etree.tostring(node, encoding='utf-8').decode('utf-8')
