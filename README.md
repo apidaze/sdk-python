@@ -69,11 +69,11 @@ Where `origin` is the number to send the text from. Must be an active number on 
 ### Download recordings
 
 ```python
-apidaze.recordings.get(filename='my_recording.wav')
-    data = response['body']
-    file = open(filename, 'wb')
-    file.write(data)
-    file.close()
+response = apidaze.recordings.get(filename='my_recording.wav')
+data = response['body']
+file = open(filename, 'wb')
+file.write(data)
+file.close()
 ```
 
 In this example, we will download the recording named `my_recording.wav`.
