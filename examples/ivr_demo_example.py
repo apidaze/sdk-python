@@ -69,7 +69,7 @@ def step3():
     return str(builder)
 
 
-class myHandler(BaseHTTPRequestHandler):
+class Handler(BaseHTTPRequestHandler):
     def _set_headers(self):
         self.send_response(200)
         self.send_header("Content-type", "text/xml")
@@ -88,7 +88,7 @@ class myHandler(BaseHTTPRequestHandler):
 
 
 port = 8080
-handler = myHandler
+handler = Handler
 
 httpd = HTTPServer(("", port), handler)
 httpd.serve_forever()
