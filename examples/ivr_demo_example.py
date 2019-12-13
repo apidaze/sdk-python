@@ -1,5 +1,6 @@
 from apidaze.script import Builder, Record, Answer, Echo, Speak, Wait
 from apidaze.script import Bind, SpeakLanguages, Conference, Playback, Ringback
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 
 def intro(localurl):
@@ -23,7 +24,7 @@ def intro(localurl):
 
     builder.add(speak)
 
-    builder.printXML()
+    return str(builder)
 
 
 def step1():
@@ -49,7 +50,7 @@ def step1():
     wait2 = Wait(2)
 
     builder.add(speak).add(wait2)
-    builder.printXML()
+    return str(builder)
 
 
 def step2():
@@ -57,7 +58,7 @@ def step2():
     speak = Speak(text='You will now be joined to an echo line.')
     echo = Echo()
     builder.add(speak).add(echo)
-    builder.printXML()
+    return str(builder)
 
 
 def step3():
@@ -65,10 +66,30 @@ def step3():
     speak = Speak('You will be entered into a conference call now.  You can initiate more calls to join participants or hangup to leave')
     conf = Conference(room='SDKTestConference')
     builder.add(speak).add(conf)
-    builder.printXML()
+    return str(builder)
 
 
-intro('http://')
-step1()
-step2()
-step3()
+class myHandler(BaseHTTPRequestHandler):
+    def _set_headers(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/xml")
+        self.end_headers()
+
+    def do_GET(self):
+        self._set_headers()
+        if self.path == '/':
+            self.wfile.write(intro('http://localhost').encode('utf-8'))
+        elif self.path == '/step1.xml':
+            self.wfile.write(step1().encode('utf-8'))
+        elif self.path == '/step2.xml':
+            self.wfile.write(step2().encode('utf-8'))
+        elif self.path == '/step3.xml':
+            self.wfile.write(step3().encode('utf-8'))
+
+
+port = 8080
+handler = myHandler
+
+httpd = HTTPServer(("", port), handler)
+httpd.serve_forever()
+
