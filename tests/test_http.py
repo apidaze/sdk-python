@@ -6,7 +6,10 @@ from apidaze.http import Http, HttpMethodEnum
 class TestHttp(unittest.TestCase):
     @property
     def httpInstance(self):
-        return Http(api_key='API_KEY', api_secret='API_SECRET', api_url='http://api.url')
+        return Http(
+            api_key='API_KEY',
+            api_secret='API_SECRET',
+            api_url='http://api.url')
 
     @Mocker()
     def prepare_request(self, method, status_code, body, mocker):
