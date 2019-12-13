@@ -34,7 +34,7 @@ def example_2():
     xmlbuilder.printXML()
 
 
-def intro():
+def intro(localurl):
     builder = Builder()
     answer = Answer()
     record = Record(name='example_recording')
@@ -45,9 +45,9 @@ def intro():
     builder.add(answer).add(record).add(wait).add(speak).add(wait)
 
     speak = Speak(text='Press 1 for an example of text to speech, press 2 to enter an echo line to check voice latency or press 3 to enter a conference.')
-    bind1 = Bind(action='http://b.atwa.us/apidaze/step1.xml', text='1')
-    bind2 = Bind(action='http://b.atwa.us/apidaze/step2.xml', text='2')
-    bind3 = Bind(action='http://b.atwa.us/apidaze/step3.xml', text='3')
+    bind1 = Bind(action=f'{localurl}/step1.xml', text='1')
+    bind2 = Bind(action=f'{localurl}/step2.xml', text='2')
+    bind3 = Bind(action=f'{localurl}/step3.xml', text='3')
     speak.add(bind1).add(bind2).add(bind3)
 
     builder.add(speak)
@@ -80,12 +80,14 @@ def step1():
     builder.add(speak).add(wait2)
     builder.printXML()
 
+
 def step2():
     builder = Builder()
     speak = Speak(text='You will now be joined to an echo line.')
     echo = Echo()
     builder.add(speak).add(echo)
     builder.printXML()
+
 
 def step3():
     builder = Builder()
@@ -97,7 +99,7 @@ def step3():
 
 # example_1()
 # example_2()
-intro()
+intro('http://')
 step1()
 step2()
 step3()
