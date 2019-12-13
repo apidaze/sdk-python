@@ -1,16 +1,17 @@
 from lxml import etree
+from copy import deepcopy
 from apidaze.script.nodes.base_node import BaseNode
 from apidaze.script.nodes.answer import Answer # NOQA
 from apidaze.script.nodes.bind import Bind # NOQA
 from apidaze.script.nodes.conference import Conference # NOQA
-from apidaze.script.nodes.dial import Dial # NOQA
+from apidaze.script.nodes.dial import Dial, DialStrategy, DialTargetType # NOQA
 from apidaze.script.nodes.echo import Echo # NOQA
 from apidaze.script.nodes.hangup import Hangup # NOQA
 from apidaze.script.nodes.intercept import Intercept # NOQA
 from apidaze.script.nodes.playback import Playback # NOQA
 from apidaze.script.nodes.record import Record # NOQA
 from apidaze.script.nodes.ringback import Ringback # NOQA
-from apidaze.script.nodes.speak import Speak # NOQA
+from apidaze.script.nodes.speak import Speak, SpeakLanguages # NOQA
 from apidaze.script.nodes.wait import Wait # NOQA
 
 
@@ -20,7 +21,11 @@ class Builder():
         self.work = etree.SubElement(self.root, 'work')
 
     def add(self, element: BaseNode):
-        self.work.append(element)
+        children = self.work.getchildren()
+        if element in children:
+            self.work.append(deepcopy(element))
+        else:
+            self.work.append(element)
         return self
 
     def write_to_file(self, filename: str):
