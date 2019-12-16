@@ -1,6 +1,7 @@
 from apidaze.script import Builder, Record, Answer, Echo, Speak, Wait
 from apidaze.script import Bind, SpeakLanguages, Conference, Playback, Ringback
 from http.server import HTTPServer, BaseHTTPRequestHandler
+import os
 
 
 def intro(localurl):
@@ -70,21 +71,31 @@ def step3():
 
 
 class Handler(BaseHTTPRequestHandler):
-    def _set_headers(self):
+    def _set_headers(self, header: (str, str) = ("Content-type", "text/xml")):
         self.send_response(200)
-        self.send_header("Content-type", "text/xml")
+        self.send_header(header[0], header[1])
         self.end_headers()
 
     def do_GET(self):
-        self._set_headers()
         if self.path == '/':
+            self._set_headers()
             self.wfile.write(intro('http://localhost').encode('utf-8'))
         elif self.path == '/step1.xml':
+            self._set_headers()
             self.wfile.write(step1().encode('utf-8'))
         elif self.path == '/step2.xml':
+            self._set_headers()
             self.wfile.write(step2().encode('utf-8'))
         elif self.path == '/step3.xml':
+            self._set_headers()
             self.wfile.write(step3().encode('utf-8'))
+        elif self.path == '/apidazeintro.wav':
+            self._set_headers(header=("Content-type", "audio/wav"))
+            current_dir = os.getcwd()
+            file = open(current_dir + '/resources/apidazeintro.wav', "rb")
+            data = file.read()
+            file.close()
+            self.wfile.write(data)
 
 
 port = 8080
