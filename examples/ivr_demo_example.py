@@ -77,7 +77,7 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if self.path == '/intro.xml':
+        if self.path == '/':
             self._set_headers()
             self.wfile.write(intro('http://localhost').encode('utf-8'))
         elif self.path == '/step1.xml':
