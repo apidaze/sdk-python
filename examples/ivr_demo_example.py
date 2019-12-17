@@ -88,7 +88,7 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/':
-            data = intro('http://b.atwa.us/apidaze/intro.xml').encode('utf-8')
+            data = intro('http://localhost').encode('utf-8')
             length = len(data)
             self._set_headers(length=str(length))
             self.wfile.write(data)
