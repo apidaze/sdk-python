@@ -14,8 +14,16 @@ def intro(localurl):
     playback = Playback(file=f'{localurl}/apidazeintro.wav')
     speak = Speak(text='This example script will show you some things you can do with our API')
 
-    builder.add(ringback).add(wait8).add(answer).add(record).add(wait).add(
-        playback).add(speak).add(wait)
+    builder.add(
+        ringback
+        ).add(
+        wait8
+        ).add(
+        answer).add(record).add(
+        wait).add(
+        playback
+        ).add(
+        speak).add(wait)
 
     speak = Speak(text='Press 1 for an example of text to speech, press 2 to enter an echo line to check voice latency or press 3 to enter a conference.')
     bind1 = Bind(action=f'{localurl}/step1.xml', text='1')
@@ -71,30 +79,41 @@ def step3():
 
 
 class Handler(BaseHTTPRequestHandler):
-    def _set_headers(self, header: (str, str) = ("Content-type", "text/xml")):
+    def _set_headers(self, length: str, header: (str, str) = ("Content-type", "text/xml")):
         self.send_response(200)
+        self.protocol_version = 'HTTP/1.1'
         self.send_header(header[0], header[1])
+        self.send_header('Content-Length', length)
         self.end_headers()
 
     def do_GET(self):
         if self.path == '/':
-            self._set_headers()
-            self.wfile.write(intro('http://localhost').encode('utf-8'))
+            data = intro('http://b.atwa.us/apidaze/intro.xml').encode('utf-8')
+            length = len(data)
+            self._set_headers(length=str(length))
+            self.wfile.write(data)
         elif self.path == '/step1.xml':
-            self._set_headers()
-            self.wfile.write(step1().encode('utf-8'))
+            data = step1().encode('utf-8')
+            length = len(data)
+            self._set_headers(length=str(length))
+            self.wfile.write(data)
         elif self.path == '/step2.xml':
-            self._set_headers()
-            self.wfile.write(step2().encode('utf-8'))
+            data = step2().encode('utf-8')
+            length = len(data)
+            self._set_headers(length=str(length))
+            self.wfile.write(data)
         elif self.path == '/step3.xml':
-            self._set_headers()
-            self.wfile.write(step3().encode('utf-8'))
+            data = step3().encode('utf-8')
+            length = len(data)
+            self._set_headers(length=str(length))
+            self.wfile.write(data)
         elif self.path == '/apidazeintro.wav':
-            self._set_headers(header=("Content-type", "audio/wav"))
             current_dir = os.getcwd()
             file = open(current_dir + '/resources/apidazeintro.wav', "rb")
             data = file.read()
             file.close()
+            length = len(data)
+            self._set_headers(header=("Content-type", "audio/wav"), length=str(length))
             self.wfile.write(data)
 
 

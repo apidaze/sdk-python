@@ -22,16 +22,20 @@ second_number = '123456799'
 
 
 class Handler(BaseHTTPRequestHandler):
-    def _set_headers(self):
+    def _set_headers(self, length: str, header: (str, str) = ("Content-type", "text/xml")):
         self.send_response(200)
-        self.send_header("Content-type", "text/xml")
+        self.protocol_version = 'HTTP/1.1'
+        self.send_header(header[0], header[1])
+        self.send_header('Content-Length', length)
         self.end_headers()
 
     def do_GET(self):
-        self._set_headers()
-        self.wfile.write(find_me_or_follow_me(
+        data = find_me_or_follow_me(
             first_number,
-            second_number).encode('utf-8'))
+            second_number).encode('utf-8')
+        length = len(data)
+        self._set_headers(length=str(length))
+        self.wfile.write(data)
 
 
 port = 8080
