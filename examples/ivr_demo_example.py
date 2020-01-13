@@ -2,11 +2,12 @@ from apidaze.script import Builder, Record, Answer, Echo, Speak, Wait
 from apidaze.script import Bind, SpeakLanguages, Conference, Playback, Ringback
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import os
+import re
 
 
 def intro(localurl):
     builder = Builder()
-    ringback = Ringback(file='FR')
+    ringback = Ringback(file=f'{localurl}/apidazeintro.wav')
     wait8 = Wait(8)
     answer = Answer()
     record = Record(name='example_recording')
@@ -17,15 +18,21 @@ def intro(localurl):
     builder.add(
         ringback
         ).add(
-        wait8
+        wait
         ).add(
-        answer).add(record).add(
-        wait).add(
+        answer
+        ).add(
+        record
+        ).add(
+        wait
+        ).add(
         playback
         ).add(
-        speak).add(wait)
+        speak
+        ).add(
+        wait)
 
-    speak = Speak(text='Press 1 for an example of text to speech, press 2 to enter an echo line to check voice latency or press 3 to enter a conference.')
+    speak = Speak(text='Press 1 for an example of text to speech, press 2 to enter an echo line to check voice latency or press 3 to enter a conference.', input_timeout=10000)
     bind1 = Bind(action=f'{localurl}/step1.xml', text='1')
     bind2 = Bind(action=f'{localurl}/step2.xml', text='2')
     bind3 = Bind(action=f'{localurl}/step3.xml', text='3')
@@ -86,34 +93,41 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header('Content-Length', length)
         self.end_headers()
 
+    def _serve_wav(self):
+        current_dir = os.getcwd()
+        file = open(current_dir + '/resources/apidazeintro.wav', "rb")
+        data = file.read()
+        file.close()
+        length = len(data)
+        self._set_headers(header=("Content-type", "audio/wav"), length=str(length))
+        self.wfile.write(data)
+
+    def do_HEAD(self):
+        if self.path == '/apidazeintro.wav':
+            self._serve_wav()
+
     def do_GET(self):
-        if self.path == '/':
-            data = intro('http://localhost').encode('utf-8')
-            length = len(data)
-            self._set_headers(length=str(length))
-            self.wfile.write(data)
-        elif self.path == '/step1.xml':
+        if re.search(r'/step1.xml', self.path):
             data = step1().encode('utf-8')
             length = len(data)
             self._set_headers(length=str(length))
             self.wfile.write(data)
-        elif self.path == '/step2.xml':
+        elif re.search(r'/step2.xml', self.path):
             data = step2().encode('utf-8')
             length = len(data)
             self._set_headers(length=str(length))
             self.wfile.write(data)
-        elif self.path == '/step3.xml':
+        elif re.search(r'/step3.xml', self.path):
             data = step3().encode('utf-8')
             length = len(data)
             self._set_headers(length=str(length))
             self.wfile.write(data)
-        elif self.path == '/apidazeintro.wav':
-            current_dir = os.getcwd()
-            file = open(current_dir + '/resources/apidazeintro.wav', "rb")
-            data = file.read()
-            file.close()
+        elif re.search(r'/apidazeintro.wav', self.path):
+            self._serve_wav()
+        else:
+            data = intro('http://localhost:8080').encode('utf-8')
             length = len(data)
-            self._set_headers(header=("Content-type", "audio/wav"), length=str(length))
+            self._set_headers(length=str(length))
             self.wfile.write(data)
 
 
@@ -122,4 +136,3 @@ handler = Handler
 
 httpd = HTTPServer(("", port), handler)
 httpd.serve_forever()
-
