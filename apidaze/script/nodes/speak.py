@@ -38,6 +38,10 @@ class Speak(BaseNode):
         Text to be spoken.
     lang: SpeakLanguages
         The language this text will be spoken
+    input_timeout: int
+        The input timeout in miliseconds
+    digit_timeout: int
+        The digit timeout in miliseconds
 
     Returns
     -------
@@ -47,11 +51,22 @@ class Speak(BaseNode):
     def __init__(
             self,
             text: str,
-            lang: SpeakLanguages = SpeakLanguages.default
+            lang: SpeakLanguages = SpeakLanguages.default,
+            input_timeout: int = 0,
+            digit_timeout: int = 0
             ):
         attrib = {
             'lang': lang.value,
         }
+        if input_timeout:
+            attrib.update({
+                'input-timeout': str(input_timeout)
+            })
+        if digit_timeout:
+            attrib.update({
+                'digit-timeout': str(digit_timeout)
+            })
+
         super().__init__(text, attrib=attrib)
 
     def add(self, bind: Bind):
