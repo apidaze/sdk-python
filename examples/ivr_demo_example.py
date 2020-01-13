@@ -65,7 +65,7 @@ def step1():
 def step2():
     builder = Builder()
     speak = Speak(text='You will now be joined to an echo line.')
-    echo = Echo()
+    echo = Echo(500)
     builder.add(speak).add(echo)
     return str(builder)
 
