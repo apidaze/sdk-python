@@ -4,7 +4,7 @@ from apidaze.http import Http
 from apidaze.externalscripts import Externalscripts
 
 
-class TestCdrhandlers(unittest.TestCase):
+class TestExternalScripts(unittest.TestCase):
     @property
     def httpInstance(self):
         return Http(
@@ -134,3 +134,73 @@ class TestCdrhandlers(unittest.TestCase):
             'http://exmaple.com/test.xml',
             'My Test Script',
             401)
+
+    @Mocker()
+    def prepare_create(self, url, name, status_code, mocker):
+        body = {
+            'body': {
+                'id': '1234',
+                'name': name,
+                'url': url,
+                'sms_url': '',
+                'reseller_cust_id': 0,
+                'dev_cust_id': 0,
+                'created_at': '2020-01-28T14:18:31.000Z',
+                'updated_at': '2020-01-28T14:18:31.000Z'},
+            'status_code': status_code
+        }
+
+        mocker.register_uri(
+            method='POST',
+            url=f'{self.httpInstance.base_url}/externalscripts',
+            json=body,
+            status_code=status_code
+        )
+
+        expected_body = {
+            'body': body,
+            'status_code': status_code
+        }
+
+        response = self.external_scripts.create(url=url, name=name)
+
+        self.assertEqual(expected_body, response)
+
+    def test_create_success(self):
+        self.prepare_create(
+            'http://exmaple.com/test.xml',
+            'My Test Script',
+            201)
+
+    def test_create_failure(self):
+        self.prepare_create(
+            'http://exmaple.com/test.xml',
+            'My Test Script',
+            401)
+
+    @Mocker()
+    def prepare_remove(self, id, status_code, mocker):
+        body = {
+            'status_code': status_code
+        }
+
+        mocker.register_uri(
+            method='DELETE',
+            url=f'{self.httpInstance.base_url}/externalscripts/{id}',
+            json=body,
+            status_code=status_code
+        )
+
+        expected_body = {
+            'status_code': status_code
+        }
+
+        response = self.external_scripts.remove(id)
+
+        self.assertEqual(expected_body, response)
+
+    def test_remove_success(self):
+        self.prepare_remove(1234, 204)
+
+    def test_remove_failure(self):
+        self.prepare_remove(1234, 404)
