@@ -67,7 +67,7 @@ class Calls(object):
                 The destination passed as a parameter
                 to your External Script URL.
             call_type: CallType
-                The type of the terminal to ring first. Options: 
+                The type of the terminal to ring first. Options:
                 CallType.number or CallType.sipaccount.
 
             Returns
@@ -145,4 +145,3 @@ class Calls(object):
         }
 
         return result
-

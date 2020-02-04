@@ -43,8 +43,9 @@ class Cdrhandlers(object):
 
     def create(self, url: str, name: str):
         """
-            Creates a new CDR HTTP Handler. 
-            This will post the call detail (after a call) to the webhook URL you define.
+            Creates a new CDR HTTP Handler.
+            This will post the call detail (after a call) to the
+            webhook URL you define.
 
             Parameters
             ----------
@@ -76,7 +77,7 @@ class Cdrhandlers(object):
 
     def update(self, id: int, url: str, name: str):
         """
-            Updates your current CDR HTTP Handler. 
+            Updates your current CDR HTTP Handler.
 
             Parameters
             ----------
