@@ -103,7 +103,7 @@ class Externalscripts(object):
 
     def update(self, id: int, url: str, name: str):
         """
-            Updates the external script with given id. 
+            Updates the external script with given id.
 
             Parameters
             ----------

@@ -26,7 +26,8 @@ class Messages(object):
             Parameters
             ----------
             origin: str
-                The number to send the text from. Must be an active number on your account.
+                The number to send the text from. Must be an active
+                number on your account.
             destination: str
                 Destination number (no + sign)
             body: dict
