@@ -43,7 +43,7 @@ class Sipuri(BaseNode):
                 'timeout': str(timeout),
             })
 
-        super().__init__(uri, attrib)
+        super().__init__(uri, attrib=attrib)
 
 
 class Dial(BaseNode):
