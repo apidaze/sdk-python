@@ -8,10 +8,12 @@ def find_me_or_follow_me(first: str, second: str):
         destination=first,
         timeout=12,
         strategy=DialStrategy.sequence,
-        target_type=DialTargetType.number)
+        target_type=DialTargetType.number,
+        attrib_timeout=6)
     dial.add(
         destination=second,
-        target_type=DialTargetType.number)
+        target_type=DialTargetType.number,
+        timeout=6)
 
     builder.add(dial)
     return str(builder)
