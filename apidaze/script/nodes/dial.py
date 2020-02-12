@@ -14,18 +14,36 @@ class DialTargetType(Enum):
 
 
 class Number(BaseNode):
-    def __init__(self, number: str):
-        super().__init__(number)
+    def __init__(self, number: str, timeout: int = None):
+        attrib = {}
+        if timeout:
+            attrib.update({
+                'timeout': str(timeout),
+            })
+
+        super().__init__(number, attrib=attrib)
 
 
 class Sipaccount(BaseNode):
-    def __init__(self, sipaccount: str):
-        super().__init__(sipaccount)
+    def __init__(self, sipaccount: str, timeout: int = None):
+        attrib = {}
+        if timeout:
+            attrib.update({
+                'timeout': str(timeout),
+            })
+
+        super().__init__(sipaccount, attrib=attrib)
 
 
 class Sipuri(BaseNode):
-    def __init__(self, uri: str):
-        super().__init__(uri)
+    def __init__(self, uri: str, timeout: int = None):
+        attrib = {}
+        if timeout:
+            attrib.update({
+                'timeout': str(timeout),
+            })
+
+        super().__init__(uri, attrib)
 
 
 class Dial(BaseNode):
@@ -59,6 +77,9 @@ class Dial(BaseNode):
     caller_hangup_url: str
         A URL containing XML instructions to run on the callee
         side when the caller hangs up.
+    attrib_timeout: int
+        The maximum time (in seconds) to ring the call for a specific number
+        Default: none
 
     Returns
     -------
@@ -74,7 +95,8 @@ class Dial(BaseNode):
             strategy: DialStrategy = DialStrategy.simultaneous,
             action: str = None,
             answer_url: str = None,
-            caller_hangup_url: str = None
+            caller_hangup_url: str = None,
+            attrib_timeout: int = None
             ):
         attrib = {
             'timeout': str(timeout),
@@ -102,21 +124,22 @@ class Dial(BaseNode):
             })
 
         if target_type == DialTargetType.number:
-            child = Number(destination)
+            child = Number(destination, timeout=attrib_timeout)
         elif target_type == DialTargetType.sipaccount:
-            child = Sipaccount(destination)
+            child = Sipaccount(destination, timeout=attrib_timeout)
         else:
-            child = Sipuri(destination)
+            child = Sipuri(destination, timeout=attrib_timeout)
         super().__init__(child, attrib=attrib)
 
     def add(self,
             destination: str,
-            target_type: DialTargetType):
+            target_type: DialTargetType,
+            timeout: int = None):
         if target_type == DialTargetType.number:
-            child = Number(destination)
+            child = Number(destination, timeout=timeout)
         elif target_type == DialTargetType.sipaccount:
-            child = Sipaccount(destination)
+            child = Sipaccount(destination, timeout=timeout)
         else:
-            child = Sipuri(destination)
+            child = Sipuri(destination, timeout=timeout)
         self.append(child)
         return self
