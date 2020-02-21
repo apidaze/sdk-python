@@ -156,11 +156,11 @@ class Sipusers(object):
             name: str
                 Updated name for the the SIP User.
                 Omit to ignore the updating of this field.
-            internal_caller_id_number: int
+            internal_caller_id_number: str
                 Updated Internal Caller ID Number for the SIP User.
                 Default is an empty string; omit to ignore the updating
                 of this field.
-            external_caller_id_number: int
+            external_caller_id_number: str
                 Updated External Caller ID Number for the SIP User.
                 Default is an empty string; omit to ignore the updating
                 of this field.
@@ -172,15 +172,19 @@ class Sipusers(object):
             dict
                 JSON response
         """
-        response = self.http.request(
-            method=HttpMethodEnum.PUT,
-            endpoint=f'{self.endpoint}/{id}',
-            payload={
+        payload = {
                 'name': name,
                 'internal_caller_id_number': internal_caller_id_number,
                 'external_caller_id_number': external_caller_id_number,
-                'reset_password': str(reset_password).lower()
             }
+
+        if reset_password:
+            payload.update({'reset_password': reset_password})
+
+        response = self.http.request(
+            method=HttpMethodEnum.PUT,
+            endpoint=f'{self.endpoint}/{id}',
+            payload=payload
             )
 
         result = {
