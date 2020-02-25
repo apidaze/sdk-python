@@ -19,5 +19,5 @@ jobs:
         pip install -r tests/requirements.txt
     - name: Lint with flake8
       run: make linter
-    - name: Test with pytest
-      run: make tests
+    - name: Test with Tox
+      run: make test
