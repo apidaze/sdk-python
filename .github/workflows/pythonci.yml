@@ -15,11 +15,9 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
-        python -m virtualenv --clear venv
-        . venv/bin/activate
         python -m pip install --upgrade pip
         pip install -r tests/requirements.txt
     - name: Lint with flake8
-      run: make linter
+      run: flake8 ./apidaze
     - name: Test with Tox
-      run: make test
+      run: tox -e python
