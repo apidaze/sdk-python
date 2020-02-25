@@ -23,7 +23,7 @@ docs-install:
 docs:
 	@rm -rf docs/source/_rst
 	@rm -rf docs/build
-	. $(VENV_NAME)/bin/activate; sphinx-apidoc -f apidaze -o docs/source/_rst
+	. $(VENV_NAME)/bin/activate; sphinx-apidoc -M -f apidaze -o docs/source/_rst --implicit-namespaces
 	. $(VENV_NAME)/bin/activate; sphinx-build -b html -c ./docs -d docs/build/doctrees . docs/build/html
 
 clean:

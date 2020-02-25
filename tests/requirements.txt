@@ -2,5 +2,5 @@ nose
 requests
 requests-mock
 lxml
-Sphinx==1.8.0
+Sphinx
 recommonmark

@@ -25,3 +25,10 @@ method, this part of the documentation is for you.
    :glob:
 
    docs/source/_rst/modules.rst
+   
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
