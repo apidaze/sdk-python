@@ -8,6 +8,9 @@ from apidaze.externalscripts import Externalscripts
 from apidaze.applications import Applications
 
 
+__version_info__ = ('1', '0', '0')
+__version__ = '.'.join(__version_info__)
+
 class Client(object):
     """
         Initializes the Apidaze Client class

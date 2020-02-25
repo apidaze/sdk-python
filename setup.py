@@ -2,13 +2,17 @@
 
 from setuptools import setup, find_packages
 
+__version__ = None
+with open('apidaze/__init__.py') as f:
+    exec(f.read())
+
 print(find_packages())
 
 setup(
   name='apidaze',
-  version='0.0.1',
+  version=__version__,
   description='Python bindings for the APIdaze API',
-  author='APIdaze',
+  author='Apidaze',
   author_email='support@apidaze.com',
   keywords='cpaas telecommunication call sms api',
   url='https://github.com/apidaze/apidaze-python',
