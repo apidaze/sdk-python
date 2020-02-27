@@ -15,4 +15,9 @@ def list_mediafiles(max_items: int = 500, details: bool = False,
     response = apidaze.media.list(max_items=max_items, details=details, filter=filter, last_token=last_token)
     print(response)
 
-list_mediafiles(max_items=5, details=True)
+def summary(filename: str):
+    response = apidaze.media.summary(filename)
+    print(response)
+
+#list_mediafiles(max_items=2, details=True)
+summary('anything.wav')

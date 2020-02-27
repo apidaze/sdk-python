@@ -16,9 +16,6 @@ class TestMediafiles(unittest.TestCase):
     def mediafiles(self):
         return Mediafiles(self.httpInstance)
 
-# ['anything.wav', 'lxx9.wav', 'mll.mp3', 'sclft.wav', 'scmo.wav', 'scold.wav', 'scolda.wav', 'scoldu.wav', 'scrgt.wav', 'scst.wav', 'scstlft.wav', 'scstrgt.wav', 'sl.mp3', 'socold.WAV', 'socold.wav', 'stest.wav', 'testFile.wav', 'testa7.wav', 'xx8.wav', 'xx9.wav', 'zzz8.wav'], 'status_code': 200
-
-
     @Mocker()
     def prepare_list(self, status_code, mocker):
         body = {
@@ -47,3 +44,42 @@ class TestMediafiles(unittest.TestCase):
 
     def test_list_failure(self):
         self.prepare_list(401)
+
+    @Mocker()
+    def prepare_summary(self, filename, status_code, mocker):
+        headers = {
+            'content-type': 'audio/wav',
+            'Content-Disposition': f'inline;filename={filename}',
+            'Content-Transfer-Encoding': 'binary',
+            'Content-Length': '17438',
+            'Date': 'Thu, 27 Feb 2020 15:01:54 GMT',
+            'Connection': 'keep-alive'
+        }
+
+        body = {
+            'body': "RIFF",
+        }
+
+        mocker.register_uri(
+            method='HEAD',
+            url=f'{self.httpInstance.base_url}/mediafiles/{filename}',
+            json=body,
+            status_code=status_code,
+            headers=headers
+        )
+
+        expected_body = {
+            'body': body,
+            'headers': headers,
+            'status_code': status_code
+        }
+
+        response = self.mediafiles.summary(filename)
+
+        self.assertEqual(expected_body, response)
+
+    def test_summary_success(self):
+        self.prepare_summary('test.wav', 200)
+
+    def test_summary_failure(self):
+        self.prepare_summary('test.wav', 401)

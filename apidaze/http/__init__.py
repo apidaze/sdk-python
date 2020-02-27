@@ -27,6 +27,7 @@ class HttpMethodEnum(Enum):
     POST = "post"
     DELETE = "delete"
     PUT = "put"
+    HEAD = "head"
 
 
 class Http(object):
@@ -104,3 +105,10 @@ class Http(object):
 
     def __concatenate_url(self, url: str, endpoint: str) -> str:
         return self.__slash_join(url, endpoint)
+
+    def is_json(self, myjson):
+        try:
+            json.loads(myjson)
+        except ValueError:
+            return False
+        return True

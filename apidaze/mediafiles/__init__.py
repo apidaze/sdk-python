@@ -20,7 +20,7 @@ class Mediafiles(object):
         self.endpoint = '/mediafiles'
 
     def list(self, max_items: int = 500, details: bool = False,
-            filter: str = "", last_token: str = ""):
+             filter: str = "", last_token: str = ""):
         """
             List all Mediafiles for an application.
 
@@ -65,6 +65,40 @@ class Mediafiles(object):
 
         result = {
             'body': response.json(),
+            'status_code': response.status_code
+        }
+
+        return result
+
+    def summary(self, filename: str):
+        """
+            Show a Mediafile summary.
+
+            Parameters
+            ----------
+            filename: str
+                Enter the filename with any custom pathing to stat.
+                Example: test_playback_file.wav,
+                clients/bob/test_playback_file.wav
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.HEAD,
+            endpoint=f'{self.endpoint}/{filename}',
+            payload={}
+            )
+
+        body = response.text
+        if self.http.is_json(response.text):
+            body = response.json()
+
+        result = {
+            'body': body,
+            'headers': response.headers,
             'status_code': response.status_code
         }
 
