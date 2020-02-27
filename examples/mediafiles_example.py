@@ -10,8 +10,9 @@ sandbox_url = 'https://cpaas-api.dev.voipinnovations.com'
 apidaze = Client(api_key=API_KEY, api_secret=API_SECRET, api_url=sandbox_url)
 
 
-def list_mediafiles():
-    response = apidaze.media.list()
+def list_mediafiles(max_items: int = 500, details: bool = False,
+            filter: str = "", last_token: str = ""):
+    response = apidaze.media.list(max_items=max_items, details=details, filter=filter, last_token=last_token)
     print(response)
 
-list_mediafiles()
+list_mediafiles(max_items=5, details=True)
