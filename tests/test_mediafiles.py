@@ -114,3 +114,22 @@ class TestMediafiles(unittest.TestCase):
 
     def test_get_failure(self):
         self.prepare_get('name', 401)
+
+    @Mocker()
+    def prepare_remove(self, filename, status_code, mocker):
+        mocker.register_uri(
+            method='DELETE',
+            url=f'{self.httpInstance.base_url}/mediafiles/{filename}',
+            status_code=status_code
+        )
+
+        response = self.mediafiles.remove(filename)
+
+        self.assertEqual('', response['body'])
+        self.assertEqual(status_code, response['status_code'])
+
+    def test_remove_success(self):
+        self.prepare_remove('name', 204)
+
+    def test_remove_failure(self):
+        self.prepare_remove('name', 401)

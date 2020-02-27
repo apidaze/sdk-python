@@ -132,3 +132,36 @@ class Mediafiles(object):
         }
 
         return result
+
+    def remove(self, filename: str):
+        """
+            Delete a Mediafile from an application.
+
+            Parameters
+            ----------
+            filename: str
+                Enter the filename with any custom pathing to stat.
+                Example: test_playback_file.wav,
+                clients/bob/test_playback_file.wav
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.DELETE,
+            endpoint=f'{self.endpoint}/{filename}',
+            payload={}
+            )
+
+        body = response.text
+        if self.http.is_json(response.text):
+            body = response.json()
+
+        result = {
+            'body': body,
+            'status_code': response.status_code
+        }
+
+        return result
