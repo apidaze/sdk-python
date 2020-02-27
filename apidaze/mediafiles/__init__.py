@@ -70,6 +70,35 @@ class Mediafiles(object):
 
         return result
 
+    def get(self, filename: str):
+        """
+            Download a Mediafile.
+
+            Parameters
+            ----------
+            filename: str
+                Enter the filename with any custom pathing to stat.
+                Example: test_playback_file.wav,
+                clients/bob/test_playback_file.wav
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        response = self.http.request(
+            method=HttpMethodEnum.GET,
+            endpoint=f'{self.endpoint}/{filename}',
+            payload={}
+            )
+
+        result = {
+            'body': response.content,
+            'status_code': response.status_code
+        }
+
+        return result
+
     def summary(self, filename: str):
         """
             Show a Mediafile summary.
