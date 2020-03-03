@@ -1,9 +1,9 @@
 from apidaze.http import Http, HttpMethodEnum
 
 
-class Sipusers(object):
+class Sip_users(object):
     """
-        Initializes the Sipusers class
+        Initializes the Sip_users class
 
         Parameters
         ----------
@@ -13,7 +13,7 @@ class Sipusers(object):
         Returns
         -------
         object
-            The Apidaze Sipusers object
+            The Apidaze Sip_users object
     """
     def __init__(self, http: Http):
         self.http = http

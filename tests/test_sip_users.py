@@ -1,10 +1,10 @@
 import unittest
 from requests_mock import Mocker
 from apidaze.http import Http
-from apidaze.sipusers import Sipusers
+from apidaze.sipusers import Sip_users
 
 
-class TestSipusers(unittest.TestCase):
+class TestSip_users(unittest.TestCase):
     @property
     def httpInstance(self):
         return Http(
@@ -13,8 +13,8 @@ class TestSipusers(unittest.TestCase):
             api_url='http://api.url')
 
     @property
-    def sipusers(self):
-        return Sipusers(self.httpInstance)
+    def sip_users(self):
+        return Sip_users(self.httpInstance)
 
     @Mocker()
     def prepare_list(self, status_code, mocker):
@@ -63,7 +63,7 @@ class TestSipusers(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.sipusers.list()
+        response = self.sip_users.list()
 
         self.assertEqual(expected_body, response)
 
@@ -107,7 +107,7 @@ class TestSipusers(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.sipusers.create(name=name, username=username, email_address=email, internal_caller_id_number=interrnal_id, external_caller_id_number=external_id)
+        response = self.sip_users.create(name=name, username=username, email_address=email, internal_caller_id_number=interrnal_id, external_caller_id_number=external_id)
 
         self.assertEqual(expected_body, response)
 
@@ -136,7 +136,7 @@ class TestSipusers(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.sipusers.remove(id)
+        response = self.sip_users.remove(id)
 
         self.assertEqual(expected_body, response)
 
@@ -178,7 +178,7 @@ class TestSipusers(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.sipusers.get(id)
+        response = self.sip_users.get(id)
 
         self.assertEqual(expected_body, response)
 
@@ -221,7 +221,7 @@ class TestSipusers(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.sipusers.update(id, name, int_id, ext_id)
+        response = self.sip_users.update(id, name, int_id, ext_id)
 
         self.assertEqual(expected_body, response)
 
@@ -263,7 +263,7 @@ class TestSipusers(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.sipusers.status(id)
+        response = self.sip_users.status(id)
 
         self.assertEqual(expected_body, response)
 
@@ -307,7 +307,7 @@ class TestSipusers(unittest.TestCase):
             'status_code': status_code
         }
 
-        response = self.sipusers.reset_password(id)
+        response = self.sip_users.reset_password(id)
 
         self.assertEqual(expected_body, response)
 

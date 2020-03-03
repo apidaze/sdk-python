@@ -6,7 +6,7 @@ from apidaze.recordings import Recordings
 from apidaze.cdrhandlers import Cdrhandlers
 from apidaze.externalscripts import Externalscripts
 from apidaze.applications import Applications
-from apidaze.sipusers import Sipusers
+from apidaze.sipusers import Sip_users
 
 
 class Client(object):
@@ -52,7 +52,7 @@ class Client(object):
         self.recordings = Recordings(http=self.http)
         self.misc = Miscellaneous(http=self.http)
         self.media = None
-        self.sipusers = Sipusers(http=self.http)
+        self.sip_users = Sip_users(http=self.http)
 
     def get_client_by_app_id(self, app_id: int):
         """
