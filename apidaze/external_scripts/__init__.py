@@ -1,7 +1,7 @@
 from apidaze.http import Http, HttpMethodEnum
 
 
-class Externalscripts(object):
+class External_scripts(object):
     """
         Initializes the Externalscripts class
 

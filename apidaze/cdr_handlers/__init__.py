@@ -1,7 +1,7 @@
 from apidaze.http import Http, HttpMethodEnum
 
 
-class Cdrhandlers(object):
+class Cdr_handlers(object):
     """
         Initializes the Cdrhandlers class
 

@@ -1,7 +1,7 @@
 import unittest
 from requests_mock import Mocker
 from apidaze.http import Http
-from apidaze.sipusers import Sip_users
+from apidaze.sip_users import Sip_users
 
 
 class TestSip_users(unittest.TestCase):

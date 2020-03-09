@@ -1,7 +1,7 @@
 import unittest
 from requests_mock import Mocker
 from apidaze.http import Http
-from apidaze.externalscripts import Externalscripts
+from apidaze.external_scripts import External_scripts
 
 
 class TestExternalScripts(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestExternalScripts(unittest.TestCase):
 
     @property
     def external_scripts(self):
-        return Externalscripts(self.httpInstance)
+        return External_scripts(self.httpInstance)
 
     @Mocker()
     def prepare_list(self, status_code, mocker):
