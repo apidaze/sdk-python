@@ -2,3 +2,5 @@ nose
 requests
 requests-mock
 lxml
+Sphinx
+recommonmark
