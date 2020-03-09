@@ -3,10 +3,10 @@ from apidaze.messages import Messages
 from apidaze.misc import Miscellaneous
 from apidaze.calls import Calls
 from apidaze.recordings import Recordings
-from apidaze.cdrhandlers import Cdrhandlers
-from apidaze.externalscripts import Externalscripts
+from apidaze.cdr_handlers import Cdr_handlers
+from apidaze.external_scripts import External_scripts
 from apidaze.applications import Applications
-from apidaze.sipusers import Sip_users
+from apidaze.sip_users import Sip_users
 
 
 class Client(object):
@@ -46,9 +46,9 @@ class Client(object):
         # Domains
         self.applications = Applications(http=self.http)
         self.messages = Messages(http=self.http)
-        self.external_scripts = Externalscripts(http=self.http)
+        self.external_scripts = External_scripts(http=self.http)
         self.calls = Calls(http=self.http)
-        self.cdr_handlers = Cdrhandlers(http=self.http)
+        self.cdr_handlers = Cdr_handlers(http=self.http)
         self.recordings = Recordings(http=self.http)
         self.misc = Miscellaneous(http=self.http)
         self.media = None

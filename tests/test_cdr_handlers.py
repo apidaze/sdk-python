@@ -1,7 +1,7 @@
 import unittest
 from requests_mock import Mocker
 from apidaze.http import Http
-from apidaze.cdrhandlers import Cdrhandlers
+from apidaze.cdr_handlers import Cdr_handlers
 
 
 class TestCdrhandlers(unittest.TestCase):
@@ -14,7 +14,7 @@ class TestCdrhandlers(unittest.TestCase):
 
     @property
     def cdr_handlers(self):
-        return Cdrhandlers(self.httpInstance)
+        return Cdr_handlers(self.httpInstance)
 
     @Mocker()
     def prepare_list(self, status_code, mocker):
