@@ -1,3 +1,5 @@
+![Python CI](https://github.com/apidaze/sdk-python/workflows/Python%20CI/badge.svg)
+
 # Apidaze Python SDK
 
 The Apidaze Python SDK contains the Python client of Apidaze REST API as well as an XML script builder.
