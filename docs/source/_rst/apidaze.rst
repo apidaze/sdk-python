@@ -13,10 +13,11 @@ Subpackages
 
    apidaze.applications
    apidaze.calls
-   apidaze.cdrhandlers
-   apidaze.externalscripts
+   apidaze.cdr_handlers
+   apidaze.external_scripts
    apidaze.http
    apidaze.messages
    apidaze.misc
    apidaze.recordings
    apidaze.script
+   apidaze.sip_users

@@ -12,6 +12,7 @@ from apidaze.sip_users import Sip_users
 __version_info__ = ('1', '0', '0')
 __version__ = '.'.join(__version_info__)
 
+
 class Client(object):
     """
         Initializes the Apidaze Client class
