@@ -1,6 +1,27 @@
 from enum import Enum
 import requests
 from urllib.parse import urlparse
+import json
+import urllib3
+import certifi
+import os
+
+
+class HTTPResponse(urllib3.HTTPResponse):
+    def json(self):
+        return json.loads(self.text)
+
+    @property
+    def status_code(self):
+        return self.status
+
+    @property
+    def content(self):
+        return self.data
+    
+    @property
+    def text(self):
+        return self.data.decode('utf-8') if self.data else ''
 
 
 class HttpMethodEnum(Enum):
@@ -46,25 +67,56 @@ class Http(object):
         if params:
             local_params.update(params)
 
-        if method == HttpMethodEnum.POST:
-            response = requests.post(
-                url, params=local_params, headers=headers, data=payload)
-        elif method == HttpMethodEnum.GET:
-            response = requests.get(
-                url, params=local_params, headers=headers, data=payload)
-        elif method == HttpMethodEnum.DELETE:
-            response = requests.delete(
-                url,
-                params=local_params,
-                headers=headers)
-        elif method == HttpMethodEnum.PUT:
-            response = requests.put(
-                                url,
-                                params=local_params,
-                                headers=headers,
-                                data=payload)
+        # print(f'Local params: {local_params}')
 
-        return response
+        # request = requests.Request(method.value, url, params=local_params, headers=headers, data=payload)
+        # prepared = request.prepare()
+
+        # print('{}\n{}\r\n{}\r\n\r\n{}'.format(
+        # '-----------START-----------',
+        # prepared.method + ' ' + prepared.url,
+        # '\r\n'.join('{}: {}'.format(k, v) for k, v in prepared.headers.items()),
+        # prepared.body,
+        # ))
+
+
+        # session = requests.Session()
+        # response = session.send(prepared)
+
+        # if method == HttpMethodEnum.POST:
+        #     response = requests.post(
+        #         url, params=local_params, headers=headers, data=payload,
+        #         files=files)
+        # elif method == HttpMethodEnum.GET:
+        #     response = requests.get(
+        #         url, params=local_params, headers=headers, data=payload)
+        # elif method == HttpMethodEnum.DELETE:
+        #     response = requests.delete(
+        #         url,
+        #         params=local_params,
+        #         headers=headers)
+        # elif method == HttpMethodEnum.PUT:
+        #     response = requests.put(
+        #                         url,
+        #                         params=local_params,
+        #                         headers=headers,
+        #                         data=payload)
+        # elif method == HttpMethodEnum.HEAD:
+        #     response = requests.head(
+        #         url, params=local_params, headers=headers, data=payload)
+
+        if payload:
+            local_params.update(payload)
+
+        http = urllib3.PoolManager(cert_reqs='CERT_REQUIRED', ca_certs=certifi.where(), num_pools=2)
+        response = http.request(
+            method.value,
+            url,
+            fields=local_params,
+            headers=headers
+            )
+
+        return HTTPResponse(body=response.data, headers=response.headers, status=response.status, reason=response.reason, msg=response.msg)
 
     def getHeadersWithDefault(self, headers={}):
         default = {
