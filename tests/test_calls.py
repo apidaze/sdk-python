@@ -2,7 +2,10 @@ import unittest
 from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.calls import Calls, CallType
+from urllib3_mock import Responses
+import json
 
+responses = Responses('urllib3')
 
 class TestCalls(unittest.TestCase):
     @property
@@ -16,8 +19,8 @@ class TestCalls(unittest.TestCase):
     def calls(self):
         return Calls(self.httpInstance)
 
-    @Mocker()
-    def prepare_list(self, status_code, mocker):
+    @responses.activate
+    def prepare_list(self, status_code):
         body = {
             'body': {
                 'uuid': '00000000-0000-0000-0000-000000000000',
@@ -27,12 +30,13 @@ class TestCalls(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/calls',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url='/API_KEY/calls',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
+
 
         expected_body = {
             'body': body,
@@ -49,14 +53,13 @@ class TestCalls(unittest.TestCase):
     def test_list_failure(self):
         self.prepare_list(401)
 
-    @Mocker()
+    @responses.activate
     def prepare_place(
                         self,
                         caller_id,
                         origin,
                         destination,
-                        status_code,
-                        mocker):
+                        status_code):
         body = {
             'callerid': caller_id,
             'origin': origin,
@@ -64,11 +67,11 @@ class TestCalls(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='POST',
-            url=f'{self.httpInstance.base_url}/calls',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.POST,
+            url='/API_KEY/calls',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -89,8 +92,8 @@ class TestCalls(unittest.TestCase):
     def test_place_failure(self):
         self.prepare_place(123456789, 987654321, 987654321, 401)
 
-    @Mocker()
-    def prepare_get(self, uuid, status_code, mocker):
+    @responses.activate
+    def prepare_get(self, uuid, status_code):
         body = {
             'body': {
                 'uuid': uuid,
@@ -100,11 +103,11 @@ class TestCalls(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/calls/{uuid}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url=f'/API_KEY/calls/{uuid}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -122,8 +125,8 @@ class TestCalls(unittest.TestCase):
     def test_get_failure(self):
         self.prepare_get('00000000-0000-0000-0000-000000000000', 401)
 
-    @Mocker()
-    def prepare_terminate(self, uuid, status_code, mocker):
+    @responses.activate
+    def prepare_terminate(self, uuid, status_code):
         body = {
             'body': {
                 'ok': ''
@@ -131,11 +134,11 @@ class TestCalls(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='DELETE',
-            url=f'{self.httpInstance.base_url}/calls/{uuid}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.DELETE,
+            url=f'/API_KEY/calls/{uuid}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {

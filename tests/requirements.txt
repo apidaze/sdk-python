@@ -1,6 +1,5 @@
 nose
-requests
-requests-mock
 lxml
 Sphinx
 recommonmark
+urllib3-mock
