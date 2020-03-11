@@ -1,7 +1,10 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.misc import Miscellaneous
+from urllib3_mock import Responses
+import json
+
+responses = Responses('urllib3')
 
 
 class TestMiscellaneous(unittest.TestCase):
@@ -16,18 +19,19 @@ class TestMiscellaneous(unittest.TestCase):
     def misc(self):
         return Miscellaneous(self.httpInstance)
 
-    @Mocker()
-    def prepare_validate(self, status_code, mocker):
+    @responses.activate
+    def prepare_validate(self, status_code):
         body = {
             'global': 'Authentication succeeded'
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/validates',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url='/API_KEY/validates',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
+
 
         expected_body = {
             'body': body,

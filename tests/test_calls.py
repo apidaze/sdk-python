@@ -1,5 +1,4 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.calls import Calls, CallType
 from urllib3_mock import Responses
@@ -36,7 +35,6 @@ class TestCalls(unittest.TestCase):
             status=status_code,
             adding_headers={'content-type': 'application/json'}
         )
-
 
         expected_body = {
             'body': body,

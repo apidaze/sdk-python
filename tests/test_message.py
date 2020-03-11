@@ -1,7 +1,10 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.messages import Messages
+from urllib3_mock import Responses
+import json
+
+responses = Responses('urllib3')
 
 
 class TestMessage(unittest.TestCase):
@@ -16,17 +19,17 @@ class TestMessage(unittest.TestCase):
     def messages(self):
         return Messages(self.httpInstance)
 
-    @Mocker()
-    def prepare_send(self, status_code, success, mocker):
+    @responses.activate
+    def prepare_send(self, status_code, success):
         body = {
             'success': success
         }
 
-        mocker.register_uri(
-            method='POST',
-            url=f'{self.httpInstance.base_url}/sms/send',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.POST,
+            url='/API_KEY/sms/send',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         response = self.messages.send(

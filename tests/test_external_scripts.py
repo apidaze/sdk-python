@@ -1,7 +1,10 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.external_scripts import External_scripts
+from urllib3_mock import Responses
+import json
+
+responses = Responses('urllib3')
 
 
 class TestExternalScripts(unittest.TestCase):
@@ -16,8 +19,8 @@ class TestExternalScripts(unittest.TestCase):
     def external_scripts(self):
         return External_scripts(self.httpInstance)
 
-    @Mocker()
-    def prepare_list(self, status_code, mocker):
+    @responses.activate
+    def prepare_list(self, status_code):
         body = {
             'body': [{
                 'id': 1589,
@@ -31,11 +34,11 @@ class TestExternalScripts(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/externalscripts',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url='/API_KEY/externalscripts',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -53,8 +56,8 @@ class TestExternalScripts(unittest.TestCase):
     def test_list_failure(self):
         self.prepare_list(401)
 
-    @Mocker()
-    def prepare_get(self, id, status_code, mocker):
+    @responses.activate
+    def prepare_get(self, id, status_code):
         body = {
             'body': {
                 'id': id,
@@ -68,11 +71,11 @@ class TestExternalScripts(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/externalscripts/{id}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url=f'/API_KEY/externalscripts/{id}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -90,8 +93,8 @@ class TestExternalScripts(unittest.TestCase):
     def test_get_failure(self):
         self.prepare_get(1234, 401)
 
-    @Mocker()
-    def prepare_update(self, id, url, name, status_code, mocker):
+    @responses.activate
+    def prepare_update(self, id, url, name, status_code):
         body = {
             'body': {
                 'id': id,
@@ -105,11 +108,12 @@ class TestExternalScripts(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='PUT',
-            url=f'{self.httpInstance.base_url}/externalscripts/{id}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.PUT,
+            url=f'/API_KEY/externalscripts/{id}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'},
+
         )
 
         expected_body = {
