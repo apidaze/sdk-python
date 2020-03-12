@@ -1,8 +1,6 @@
-from apidaze.http import Http, HttpMethodEnum, HTTPResponse
-import urllib3
-import certifi
+from apidaze.http import Http, HttpMethodEnum
 import os
-import json
+
 
 class Media_files(object):
     """
@@ -205,7 +203,8 @@ class Media_files(object):
 
         payload = {
             'mediafile': (filename, file_data, 'audio/wav'),
-            'content-disposition': f'form-data; name="mediafile"; filename="{filename}"',
+            'content-disposition':
+                f'form-data; name="mediafile"; filename="{filename}"',
             }
 
         response = self.http.request(
