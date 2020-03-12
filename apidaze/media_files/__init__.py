@@ -1,7 +1,10 @@
-from apidaze.http import Http, HttpMethodEnum
+from apidaze.http import Http, HttpMethodEnum, HTTPResponse
+import urllib3
+import certifi
+import os
+import json
 
-
-class Mediafiles(object):
+class Media_files(object):
     """
         Initializes the Mediafiles class
 
@@ -53,6 +56,7 @@ class Mediafiles(object):
             'filter': filter,
             'last_token': last_token,
         }
+
         if details:
             params.update({'details': details})
 
@@ -161,6 +165,57 @@ class Mediafiles(object):
 
         result = {
             'body': body,
+            'status_code': response.status_code
+        }
+
+        return result
+
+    def upload(self, mediafile: str, name: str = None):
+        """
+            Upload a Mediafile for an application.
+            Mediafiles can be used in playback tags by simply
+            referencing the uploaded file name. WAV Files
+            will be converted to 8k, 16bit, 1channel audio.
+            For best quality and fastest processing,
+            supply an audio file with these exact specs.
+
+            Parameters
+            ----------
+            mediafile: str
+                This is the file to upload.
+            name: str
+                The name of the file to upload. This can include
+                pathing test_playback_file.wav,
+                clients/bob/test_playback_file.wav, ...
+                If this is not supplied, the file will be saved
+                with its original name
+
+            Returns
+            -------
+            dict
+                JSON response
+        """
+        file_data = b''
+        if os.path.isfile(mediafile):
+            data = open(mediafile, 'rb')
+            file_data = data.read()
+            data.close()
+
+        filename = name if name else os.path.basename(mediafile).split('.')[0]
+
+        payload = {
+            'mediafile': (filename, file_data, 'audio/wav'),
+            'content-disposition': f'form-data; name="mediafile"; filename="{filename}"',
+            }
+
+        response = self.http.request(
+            method=HttpMethodEnum.POST,
+            endpoint=f'{self.endpoint}',
+            payload=payload
+            )
+
+        result = {
+            'body': response.json(),
             'status_code': response.status_code
         }
 

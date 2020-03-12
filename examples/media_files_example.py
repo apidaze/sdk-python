@@ -25,13 +25,19 @@ def download_mediafile(filename: str):
     file = open(filename, 'wb')
     file.write(data)
     file.close()
+    print(response)
 
-def remove(filename: str):
+def remove_mediafile(filename: str):
     response = apidaze.media.remove(filename)
     print(response)
 
+def upload_mediafile(mediafile: str, name: str = None):
+    response = apidaze.media.upload(mediafile=mediafile, name=name)
+    print(response)
 
-#list_mediafiles(max_items=2, details=True)
-#summary_of_mediafile('anything.wav')
+
+list_mediafiles()
+# summary_of_mediafile('anything.wav')
 #download_mediafile('anything.wav')
-remove('anything.wav')
+# remove_mediafile('anything.wav')
+# upload_mediafile(mediafile='/path/to/your/file.wav', name='optional name')

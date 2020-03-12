@@ -7,7 +7,7 @@ from apidaze.cdr_handlers import Cdr_handlers
 from apidaze.external_scripts import External_scripts
 from apidaze.applications import Applications
 from apidaze.sip_users import Sip_users
-from apidaze.mediafiles import Mediafiles
+from apidaze.media_files import Media_files
 
 
 __version_info__ = ('1', '0', '0')
@@ -56,7 +56,7 @@ class Client(object):
         self.cdr_handlers = Cdr_handlers(http=self.http)
         self.recordings = Recordings(http=self.http)
         self.misc = Miscellaneous(http=self.http)
-        self.media = Mediafiles(http=self.http)
+        self.media = Media_files(http=self.http)
         self.sip_users = Sip_users(http=self.http)
 
     def get_client_by_app_id(self, app_id: int):
