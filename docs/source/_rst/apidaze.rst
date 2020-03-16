@@ -16,6 +16,7 @@ Subpackages
    apidaze.cdr_handlers
    apidaze.external_scripts
    apidaze.http
+   apidaze.media_files
    apidaze.messages
    apidaze.misc
    apidaze.recordings
