@@ -1,6 +1,9 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http, HttpMethodEnum
+from urllib3_mock import Responses
+import json
+
+responses = Responses('urllib3')
 
 
 class TestHttp(unittest.TestCase):
@@ -11,15 +14,15 @@ class TestHttp(unittest.TestCase):
             api_secret='API_SECRET',
             api_url='http://api.url')
 
-    @Mocker()
-    def prepare_request(self, method, status_code, body, mocker):
+    @responses.activate
+    def prepare_request(self, method, status_code, body):
         http = self.httpInstance
 
-        mocker.register_uri(
-            method=method,
-            url=f'{http.base_url}/endpoint',
-            json=body,
-            status_code=status_code
+        responses.add(method=method,
+            url=f'/API_KEY/endpoint',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         response = http.request(

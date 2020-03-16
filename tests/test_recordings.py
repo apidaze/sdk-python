@@ -1,8 +1,10 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.recordings import Recordings
+from urllib3_mock import Responses
 import json
+
+responses = Responses('urllib3')
 
 
 class TestRecordings(unittest.TestCase):
@@ -17,18 +19,18 @@ class TestRecordings(unittest.TestCase):
     def recordings(self):
         return Recordings(self.httpInstance)
 
-    @Mocker()
-    def prepare_list(self, status_code, mocker):
+    @responses.activate
+    def prepare_list(self, status_code):
         body = {
             'body': ['recording1.wav', 'recording2.wav'],
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/recordings',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url='/API_KEY/recordings',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -46,18 +48,18 @@ class TestRecordings(unittest.TestCase):
     def test_list_failure(self):
         self.prepare_list(401)
 
-    @Mocker()
-    def prepare_get(self, filename, status_code, mocker):
+    @responses.activate
+    def prepare_get(self, filename, status_code):
         body = {
             'body': 'some data',
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/recordings/{filename}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url=f'/API_KEY/recordings/{filename}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         response = self.recordings.get(filename)
@@ -71,12 +73,12 @@ class TestRecordings(unittest.TestCase):
     def test_get_failure(self):
         self.prepare_get('name', 401)
 
-    @Mocker()
-    def prepare_remove(self, filename, status_code, mocker):
-        mocker.register_uri(
-            method='DELETE',
-            url=f'{self.httpInstance.base_url}/recordings/{filename}',
-            status_code=status_code
+    @responses.activate
+    def prepare_remove(self, filename, status_code):
+        responses.add(method=responses.DELETE,
+            url=f'/API_KEY/recordings/{filename}',
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         response = self.recordings.remove(filename)

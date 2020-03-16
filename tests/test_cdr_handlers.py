@@ -1,7 +1,10 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.cdr_handlers import Cdr_handlers
+from urllib3_mock import Responses
+import json
+
+responses = Responses('urllib3')
 
 
 class TestCdrhandlers(unittest.TestCase):
@@ -16,8 +19,8 @@ class TestCdrhandlers(unittest.TestCase):
     def cdr_handlers(self):
         return Cdr_handlers(self.httpInstance)
 
-    @Mocker()
-    def prepare_list(self, status_code, mocker):
+    @responses.activate
+    def prepare_list(self, status_code):
         body = {
             'body': [{
                 'id': 101,
@@ -30,11 +33,11 @@ class TestCdrhandlers(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/cdrhttphandlers',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url='/API_KEY/cdrhttphandlers',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -52,8 +55,8 @@ class TestCdrhandlers(unittest.TestCase):
     def test_list_failure(self):
         self.prepare_list(401)
 
-    @Mocker()
-    def prepare_create(self, url, name, status_code, mocker):
+    @responses.activate
+    def prepare_create(self, url, name, status_code):
         body = {
             'body': [{
                 'id': 101,
@@ -66,11 +69,11 @@ class TestCdrhandlers(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='POST',
-            url=f'{self.httpInstance.base_url}/cdrhttphandlers',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.POST,
+            url='/API_KEY/cdrhttphandlers',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -93,8 +96,8 @@ class TestCdrhandlers(unittest.TestCase):
             'CDR Handler',
             401)
 
-    @Mocker()
-    def prepare_update(self, id, url, name, status_code, mocker):
+    @responses.activate
+    def prepare_update(self, id, url, name, status_code):
         body = {
             'body': [{
                 'id': 101,
@@ -107,11 +110,11 @@ class TestCdrhandlers(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='PUT',
-            url=f'{self.httpInstance.base_url}/cdrhttphandlers/{id}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.PUT,
+            url=f'/API_KEY/cdrhttphandlers/{id}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {

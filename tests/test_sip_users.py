@@ -1,7 +1,10 @@
 import unittest
-from requests_mock import Mocker
 from apidaze.http import Http
 from apidaze.sip_users import Sip_users
+from urllib3_mock import Responses
+import json
+
+responses = Responses('urllib3')
 
 
 class TestSip_users(unittest.TestCase):
@@ -16,8 +19,8 @@ class TestSip_users(unittest.TestCase):
     def sip_users(self):
         return Sip_users(self.httpInstance)
 
-    @Mocker()
-    def prepare_list(self, status_code, mocker):
+    @responses.activate
+    def prepare_list(self, status_code):
         body = {
             'body': [{
                 'id': 2517,
@@ -51,11 +54,11 @@ class TestSip_users(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/sipusers',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url=f'/API_KEY/sipusers',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -73,8 +76,8 @@ class TestSip_users(unittest.TestCase):
     def test_list_failure(self):
         self.prepare_list(401)
 
-    @Mocker()
-    def prepare_create(self, name, username, email, interrnal_id, external_id, status_code, mocker):
+    @responses.activate
+    def prepare_create(self, name, username, email, interrnal_id, external_id, status_code):
         body = {
             'body': {
                 'id': 2529,
@@ -95,11 +98,11 @@ class TestSip_users(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='POST',
-            url=f'{self.httpInstance.base_url}/sipusers',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.POST,
+            url=f'/API_KEY/sipusers',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -117,18 +120,18 @@ class TestSip_users(unittest.TestCase):
     def test_create_failure(self):
         self.prepare_create('Test User', 'test_user', 'test@email.tld', '123', '1234567890', 400)
 
-    @Mocker()
-    def prepare_remove(self, id, status_code, mocker):
+    @responses.activate
+    def prepare_remove(self, id, status_code):
         body = {
             'body': '',
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='DELETE',
-            url=f'{self.httpInstance.base_url}/sipusers/{id}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.DELETE,
+            url=f'/API_KEY/sipusers/{id}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -146,8 +149,8 @@ class TestSip_users(unittest.TestCase):
     def test_remove_failure(self):
         self.prepare_remove(1234, 500)
 
-    @Mocker()
-    def prepare_get(self, id, status_code, mocker):
+    @responses.activate
+    def prepare_get(self, id, status_code):
         body = {
             'body': {
                 'id': id,
@@ -166,11 +169,11 @@ class TestSip_users(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/sipusers/{id}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url=f'/API_KEY/sipusers/{id}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -188,8 +191,8 @@ class TestSip_users(unittest.TestCase):
     def test_get_failure(self):
         self.prepare_get(1234, 401)
 
-    @Mocker()
-    def prepare_update(self, id, name, int_id, ext_id, status_code, mocker):
+    @responses.activate
+    def prepare_update(self, id, name, int_id, ext_id, status_code):
         body = {
             'body': {
                 'id': id,
@@ -209,11 +212,11 @@ class TestSip_users(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='PUT',
-            url=f'{self.httpInstance.base_url}/sipusers/{id}',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.PUT,
+            url=f'/API_KEY/sipusers/{id}',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -241,8 +244,8 @@ class TestSip_users(unittest.TestCase):
             '45645645646464',
             401)
 
-    @Mocker()
-    def prepare_status(self, id, status_code, mocker):
+    @responses.activate
+    def prepare_status(self, id, status_code):
         body = {
             'body': {
                 'uri': 'sip:test_user@voip.addr',
@@ -251,11 +254,11 @@ class TestSip_users(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='GET',
-            url=f'{self.httpInstance.base_url}/sipusers/{id}/status',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.GET,
+            url=f'/API_KEY/sipusers/{id}/status',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {
@@ -273,8 +276,8 @@ class TestSip_users(unittest.TestCase):
     def test_status_failure(self):
         self.prepare_status(1234, 401)
 
-    @Mocker()
-    def prepare_reset_password(self, id, status_code, mocker):
+    @responses.activate
+    def prepare_reset_password(self, id, status_code):
         body = {
             'body': {
                 'id': id,
@@ -295,11 +298,11 @@ class TestSip_users(unittest.TestCase):
             'status_code': status_code
         }
 
-        mocker.register_uri(
-            method='POST',
-            url=f'{self.httpInstance.base_url}/sipusers/{id}/password',
-            json=body,
-            status_code=status_code
+        responses.add(method=responses.POST,
+            url=f'/API_KEY/sipusers/{id}/password',
+            body=json.dumps(body),
+            status=status_code,
+            adding_headers={'content-type': 'application/json'}
         )
 
         expected_body = {

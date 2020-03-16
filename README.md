@@ -9,7 +9,6 @@ See [Apidaze REST API specification](https://apidocs.voipinnovations.com) which 
 
 # Requirements
 - Python 3.4+
-- requests
 - lxml
 
 # Installation

@@ -20,7 +20,6 @@ pyflakes==2.1.1
 pylint==2.4.4
 pyparsing==2.4.4
 python-dotenv==0.10.3
-requests==2.22.0
 six==1.13.0
 toml==0.10.0
 tox==3.14.0
