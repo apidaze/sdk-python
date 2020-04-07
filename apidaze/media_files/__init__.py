@@ -67,6 +67,7 @@ class Media_files(object):
 
         result = {
             'body': response.json(),
+            'last_token': response.headers['List-Truncation-Token'],
             'status_code': response.status_code
         }
 
