@@ -20,9 +20,10 @@ class TestMediafiles(unittest.TestCase):
         return Media_files(self.httpInstance)
 
     @responses.activate
-    def prepare_list(self, status_code):
+    def prepare_list(self, status_code, last_token):
         body = {
             'body': ['test1.wav', 'test2.wav', 'test3.mp3', 'test4.wav', 'test5.wav'],
+            'last_token': last_token,
             'status_code': status_code
         }
 
@@ -30,11 +31,14 @@ class TestMediafiles(unittest.TestCase):
             url=f'/API_KEY/mediafiles',
             body=json.dumps(body),
             status=status_code,
-            adding_headers={'content-type': 'application/json'}
+            adding_headers={'content-type': 'application/json',
+            'list-truncation-token': last_token
+            }
         )
 
         expected_body = {
             'body': body,
+            'last_token': last_token,
             'status_code': status_code
         }
 
@@ -43,10 +47,10 @@ class TestMediafiles(unittest.TestCase):
         self.assertEqual(expected_body, response)
 
     def test_list_success(self):
-        self.prepare_list(200)
+        self.prepare_list(200, 'vm.1cdef287.apidaze.voip/somefile.wav')
 
     def test_list_failure(self):
-        self.prepare_list(401)
+        self.prepare_list(401, 'vm.1cdef287.apidaze.voip/somefile.wav')
 
     @responses.activate
     def prepare_summary(self, filename, status_code):
